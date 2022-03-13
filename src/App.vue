@@ -1,10 +1,28 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <Navigation />
+
+  <div class="window-content" :class="`theme_${currentTheme}`">
+    <router-view />
   </div>
-  <router-view />
 </template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+import Navigation from '@/components/blocks/Navigation.vue'
+import { useAppStore } from '@/store/modules/app'
+
+export default defineComponent({
+  components: { Navigation },
+  setup() {
+    const appStore = useAppStore()
+    let { theme } = appStore
+    console.log(appStore, 'useAppStore')
+    return {
+      currentTheme: theme,
+    }
+  },
+})
+</script>
 
 <style lang="scss">
 #app {
@@ -13,18 +31,10 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  height: 100%;
 }
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.window-content {
+  height: calc(100% - var(--nav-heigth));
 }
 </style>

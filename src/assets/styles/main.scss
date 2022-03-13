@@ -1,0 +1,27 @@
+@import "variables";
+@import "reset";
+@import "forms";
+
+html, body {
+  height: 100%;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.align-center {
+  display: flex;
+  align-items: center;
+}
+
+.justify-center {
+  display: flex;
+  justify-content: center;
+}
+
+.display-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

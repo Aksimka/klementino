@@ -1,0 +1,24 @@
+fieldset {
+  border-radius: 8px;
+  position: relative;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  padding-block-start: 0;
+  padding-inline-start: 0;
+  padding-inline-end: 0;
+  padding-block-end: 0;
+  legend {
+    text-align: left;
+    height: 12px;
+    opacity: 0;
+    line-height: 14px;
+    margin-left: 4px;
+    padding: 0 2px;
+  }
+  .legend_hidden {
+    width: 0;
+    opacity: 0;
+    padding: 0;
+    margin: 0;
+  }
+}
