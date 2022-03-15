@@ -31,10 +31,11 @@ export default defineComponent({
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  height: 100%;
+  height: 100vh;
 }
 
 .window-content {
-  height: calc(100% - var(--nav-heigth));
+  height: calc(100vh - var(--nav-heigth));
+  overflow-x: hidden;
 }
 </style>
