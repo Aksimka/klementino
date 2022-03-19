@@ -10,15 +10,10 @@
 </template>
 
 <script>
-import { defineComponent, onMounted } from 'vue'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'DescriptionElement',
-  setup(props, context) {
-    onMounted(() => {
-      console.log(context.slots, 'slots')
-    })
-  },
 })
 </script>
 
