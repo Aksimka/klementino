@@ -14,7 +14,7 @@ export default defineComponent({
 
 <style scoped>
 .round-button {
-  padding: 22px;
+  padding: 28px;
   border-radius: 50%;
   box-shadow: var(--shadow-m);
   background-color: var(--color-background-main);
