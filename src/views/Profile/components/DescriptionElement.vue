@@ -21,5 +21,9 @@ export default defineComponent({
 .description-element {
   .description-element__header {
   }
+  .description-element__content {
+    padding-top: 8px;
+    color: var(--color-gray);
+  }
 }
 </style>

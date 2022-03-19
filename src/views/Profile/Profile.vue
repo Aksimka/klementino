@@ -4,11 +4,34 @@
       <ProfilePicture />
     </div>
     <Container class="profile-info">
-      <DescriptionElement>
+      <DescriptionElement class="profile-info__element">
         <template #header>
-          <Heading type="2">Aksimka, 24</Heading>
+          <Heading type="2" weight="bold">Aksimka, 24</Heading>
         </template>
-        <Text> Frontend developer </Text>
+        <Text weight="bold"> Frontend developer </Text>
+      </DescriptionElement>
+      <DescriptionElement class="profile-info__element">
+        <template #header>
+          <Heading type="6" weight="800">About</Heading>
+        </template>
+        <Text weight="bold">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias at
+          blanditiis corporis culpa ea, eius et fugiat minima modi omnis ratione
+          ullam veritatis vitae. Architecto corporis cupiditate debitis deserunt
+          dolor dolorem eum harum laudantium nesciunt officiis reprehenderit
+          saepe, tenetur. Alias aliquam dolor ea eveniet ex explicabo fugit,
+          impedit neque tenetur!
+        </Text>
+      </DescriptionElement>
+      <DescriptionElement class="profile-info__element">
+        <template #header>
+          <Heading type="6" weight="bold">Interests</Heading>
+        </template>
+        <ChipsGroup>
+          <Chip v-for="i in chips" :key="i" class="profile-info__chip">
+            {{ i }}
+          </Chip>
+        </ChipsGroup>
       </DescriptionElement>
     </Container>
   </div>
@@ -21,13 +44,33 @@ import Text from '@/components/ui/Text/Text.vue'
 import Container from '@/components/ui/Container/Container.vue'
 import Heading from '@/components/ui/Heading/Heading.vue'
 import DescriptionElement from '@/views/Profile/components/DescriptionElement.vue'
+import Chip from '@/components/ui/Chip/Chip.vue'
+import ChipsGroup from '@/components/ui/ChipsGroup/ChipsGroup.vue'
 
 export default defineComponent({
   name: 'Main',
-  components: { DescriptionElement, Heading, Container, Text, ProfilePicture },
+  components: {
+    ChipsGroup,
+    Chip,
+    DescriptionElement,
+    Heading,
+    Container,
+    Text,
+    ProfilePicture,
+  },
   data() {
     return {
       inputValue: null,
+      chips: [
+        'qweqwe',
+        'qwe',
+        'qweqfdsav',
+        'qwdcqw',
+        'qwfqw',
+        'svasvas',
+        'vbngbdsbfb',
+        'ascvd',
+      ],
     }
   },
 })
@@ -40,7 +83,16 @@ export default defineComponent({
     top: -400px;
   }
   .profile-info {
-    padding-top: 60px;
+    height: 1000px;
+    padding-top: 70px;
+    .profile-info__element {
+      &:not(:last-child) {
+        margin-bottom: 32px;
+      }
+    }
+    .profile-info__chip {
+      margin: 8px 0 0 8px;
+    }
   }
 }
 </style>

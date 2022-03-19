@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Navigation from '@/components/blocks/Navigation.vue'
+import Navigation from '@/blocks/Navigation.vue'
 import { useAppStore } from '@/store/modules/app'
 
 export default defineComponent({
@@ -29,7 +29,7 @@ export default defineComponent({
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  color: var(--color-main-text);
   height: 100vh;
 }
 
