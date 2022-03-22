@@ -1,16 +1,27 @@
 <template>
-  <nav class="navigation display-center">
-    <router-link class="navigation-item" to="/">Home</router-link> |
-    <router-link class="navigation-item" to="/profile">Profile</router-link> |
-    <router-link class="navigation-item" to="/dialogs">Dialogs</router-link>
+  <nav class="navigation">
+    <router-link class="navigation-item" to="/">
+      <SvgIcon class="picture-action__icon" name="user-swipe" :size="34" />
+    </router-link>
+    <router-link class="navigation-item" to="/profile">
+      <SvgIcon class="picture-action__icon" name="heart" />
+    </router-link>
+    <router-link class="navigation-item" to="/dialogs">
+      <SvgIcon class="picture-action__icon" name="chats" :size="34" />
+    </router-link>
+    <router-link class="navigation-item" to="/profile">
+      <SvgIcon class="picture-action__icon" :size="34" name="user-circle" />
+    </router-link>
   </nav>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
+import SvgIcon from '@/components/SvgIcon'
 
 export default defineComponent({
   name: 'Navigation',
+  components: { SvgIcon },
 })
 </script>
 
@@ -21,15 +32,24 @@ export default defineComponent({
   position: fixed;
   bottom: 0;
   left: 0;
-  &-item {
-    padding: 0 8px;
+  box-shadow: var(--shadow-m);
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  .navigation-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-gray);
   }
   a {
     font-weight: bold;
     color: #2c3e50;
 
     &.router-link-exact-active {
-      color: #42b983;
+      //color: #42b983;
     }
   }
 }

@@ -10,23 +10,23 @@
           <BackButton />
         </div>
         <div class="picture-main-actions">
-          <RoundButton class="picture-action dislike__action">
+          <RoundButton class="picture-action background_dislike">
             <SvgIcon
-              class="picture-action__icon dislike"
+              class="picture-action__icon color_dislike"
               name="cross"
               :size="24"
             />
           </RoundButton>
-          <RoundButton class="picture-action like__action">
+          <RoundButton class="picture-action background_like">
             <SvgIcon
-              class="picture-action__icon like"
+              class="picture-action__icon color_like"
               :size="48"
               name="heart"
             />
           </RoundButton>
-          <RoundButton class="picture-action favorites__action">
+          <RoundButton class="picture-action background_favorite">
             <SvgIcon
-              class="picture-action__icon favorites"
+              class="picture-action__icon color_favorite"
               name="star"
               :size="24"
             />
@@ -97,18 +97,6 @@ export default defineComponent({
     transform: translateY(50%);
     .picture-action {
       background-color: var(--color-background-main);
-    }
-    .like__action {
-      background-color: var(--color-like);
-    }
-    .favorites {
-      color: var(--color-favorite);
-    }
-    .like {
-      color: var(--color-background-main);
-    }
-    .dislike {
-      color: var(--color-dislike);
     }
   }
 }

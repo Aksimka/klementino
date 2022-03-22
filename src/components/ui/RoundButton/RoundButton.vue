@@ -1,14 +1,19 @@
 <template>
-  <Button class="round-button display-center"><slot></slot></Button>
+  <Tappable>
+    <Button v-bind="$attrs" class="round-button display-center"
+      ><slot></slot
+    ></Button>
+  </Tappable>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
 import Button from '../Button/Button'
+import Tappable from '@/components/ui/Tappable/Tappable'
 
 export default defineComponent({
   name: 'RoundButton',
-  components: { Button },
+  components: { Tappable, Button },
 })
 </script>
 

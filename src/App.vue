@@ -1,8 +1,9 @@
 <template>
-  <Navigation />
-
-  <div class="window-content" :class="`theme_${currentTheme}`">
-    <router-view />
+  <div :class="`theme_${currentTheme}`">
+    <Navigation />
+    <div class="window-content">
+      <router-view />
+    </div>
   </div>
 </template>
 

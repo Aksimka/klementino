@@ -1,16 +1,19 @@
 <template>
-  <Button class="back-button display-center">
-    <CaretLeft color="var(--color-grey)" :size="22" :weight="3" />
-  </Button>
+  <Tappable>
+    <Button class="back-button display-center">
+      <CaretLeft color="var(--color-grey)" :size="22" :weight="3" />
+    </Button>
+  </Tappable>
 </template>
 
 <script>
 import Button from '../Button/Button'
 import CaretLeft from '../../icons/CaretLeft'
+import Tappable from '@/components/ui/Tappable/Tappable'
 
 export default {
   name: 'BackButton',
-  components: { CaretLeft, Button },
+  components: { Tappable, CaretLeft, Button },
 }
 </script>
 
