@@ -1,6 +1,6 @@
 <template>
-  <div class="profile">
-    <div class="profile-picture__wrapper">
+  <div ref="sectionWrapper" class="profile">
+    <div ref="pictureWrapper" class="profile-picture__wrapper">
       <ProfilePicture />
     </div>
     <Container class="profile-info">
@@ -38,7 +38,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, reactive, toRefs, ref, onMounted } from 'vue'
+import useStagedSticky from '@/views/Profile/hooks/useStagedSticky'
 import ProfilePicture from '@/views/Profile/blocks/ProfilePicture.vue'
 import Text from '@/components/ui/Text/Text.vue'
 import Container from '@/components/ui/Container/Container.vue'
@@ -58,8 +59,8 @@ export default defineComponent({
     Text,
     ProfilePicture,
   },
-  data() {
-    return {
+  setup() {
+    const state = reactive({
       inputValue: null,
       chips: [
         'qweqwe',
@@ -71,19 +72,36 @@ export default defineComponent({
         'vbngbdsbfb',
         'ascvd',
       ],
-    }
+    })
+
+    const sectionWrapper = ref<HTMLDivElement | null>(null)
+    const pictureWrapper = ref<HTMLDivElement | null>(null)
+
+    onMounted(() => {
+      if (sectionWrapper.value && pictureWrapper.value) {
+        useStagedSticky<HTMLDivElement>(
+          sectionWrapper.value,
+          pictureWrapper.value
+        )
+      }
+    })
+
+    return { ...toRefs(state), sectionWrapper, pictureWrapper }
   },
 })
 </script>
 
 <style scoped lang="scss">
 .profile {
+  height: 100%;
+  overflow: scroll;
   .profile-picture__wrapper {
     position: sticky;
-    top: -400px;
+    top: -500px;
+    transition: 0.3s;
   }
   .profile-info {
-    height: 1000px;
+    height: 1500px;
     padding-top: 70px;
     .profile-info__element {
       &:not(:last-child) {
