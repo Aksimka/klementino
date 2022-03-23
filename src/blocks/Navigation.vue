@@ -29,6 +29,8 @@ export default defineComponent({
 .navigation {
   width: 100%;
   height: var(--nav-heigth);
+  min-height: var(--nav-heigth);
+  background-color: var(--color-background-main);
   position: fixed;
   bottom: 0;
   left: 0;
