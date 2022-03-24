@@ -38,6 +38,7 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable */
 import { defineComponent, reactive, toRefs, ref, onMounted } from 'vue'
 import useStagedSticky from '@/views/Profile/hooks/useStagedSticky'
 import ProfilePicture from '@/views/Profile/blocks/ProfilePicture.vue'
@@ -94,7 +95,6 @@ export default defineComponent({
 <style scoped lang="scss">
 .profile {
   height: 100%;
-  overflow: scroll;
   .profile-picture__wrapper {
     position: sticky;
     top: -500px;

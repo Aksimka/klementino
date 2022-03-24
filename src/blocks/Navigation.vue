@@ -3,7 +3,7 @@
     <router-link class="navigation-item" to="/">
       <SvgIcon class="picture-action__icon" name="user-swipe" :size="34" />
     </router-link>
-    <router-link class="navigation-item" to="/profile">
+    <router-link class="navigation-item" to="/likes">
       <SvgIcon class="picture-action__icon" name="heart" />
     </router-link>
     <router-link class="navigation-item" to="/dialogs">
@@ -29,7 +29,6 @@ export default defineComponent({
 .navigation {
   width: 100%;
   height: var(--nav-heigth);
-  min-height: var(--nav-heigth);
   background-color: var(--color-background-main);
   position: fixed;
   bottom: 0;
@@ -40,6 +39,7 @@ export default defineComponent({
   display: flex;
   justify-content: space-around;
   align-items: center;
+  padding-bottom: 16px;
   .navigation-item {
     display: flex;
     justify-content: center;
@@ -51,7 +51,7 @@ export default defineComponent({
     color: #2c3e50;
 
     &.router-link-exact-active {
-      //color: #42b983;
+      color: var(--color-primary);
     }
   }
 }

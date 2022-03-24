@@ -36,6 +36,5 @@ export default defineComponent({
 
 .window-content {
   height: calc(100vh - var(--nav-heigth));
-  overflow: hidden;
 }
 </style>

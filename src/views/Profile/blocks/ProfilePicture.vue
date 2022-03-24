@@ -53,7 +53,7 @@ export default defineComponent({
 <style scoped lang="scss">
 .picture-layout {
   display: flex;
-  height: 450px;
+  height: 430px;
 
   .picture-layout__blackout {
     position: absolute;
@@ -73,6 +73,9 @@ export default defineComponent({
     border-bottom-right-radius: 40px;
     overflow: hidden;
     box-shadow: var(--shadow-m);
+    img {
+      height: 100%;
+    }
   }
   .picture-actions-layout {
     position: absolute;
