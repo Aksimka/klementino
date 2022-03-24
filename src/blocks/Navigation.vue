@@ -6,10 +6,10 @@
     <router-link class="navigation-item" to="/likes">
       <SvgIcon class="picture-action__icon" name="heart" />
     </router-link>
-    <router-link class="navigation-item" to="/dialogs">
+    <router-link class="navigation-item" to="/chats">
       <SvgIcon class="picture-action__icon" name="chats" :size="34" />
     </router-link>
-    <router-link class="navigation-item" to="/profile">
+    <router-link class="navigation-item" to="/userInfo">
       <SvgIcon class="picture-action__icon" :size="34" name="user-circle" />
     </router-link>
   </nav>
