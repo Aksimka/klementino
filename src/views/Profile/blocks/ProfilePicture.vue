@@ -54,6 +54,7 @@ export default defineComponent({
 .picture-layout {
   display: flex;
   height: 430px;
+  position: relative;
 
   .picture-layout__blackout {
     position: absolute;

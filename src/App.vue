@@ -1,5 +1,6 @@
 <template>
   <div :class="`theme_${currentTheme}`">
+    <Header />
     <Navigation />
     <div class="window-content">
       <router-view />
@@ -11,9 +12,10 @@
 import { defineComponent } from 'vue'
 import Navigation from '@/blocks/Navigation.vue'
 import { useAppStore } from '@/store/modules/app'
+import Header from '@/blocks/Header.vue'
 
 export default defineComponent({
-  components: { Navigation },
+  components: { Header, Navigation },
   setup() {
     const appStore = useAppStore()
     let { theme } = appStore
@@ -35,6 +37,7 @@ export default defineComponent({
 }
 
 .window-content {
-  height: calc(100vh - var(--nav-heigth));
+  height: calc(100vh - var(--nav-heigth) - var(--header-heigth));
+  margin-top: var(--header-heigth);
 }
 </style>

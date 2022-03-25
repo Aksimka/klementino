@@ -86,7 +86,7 @@ export default defineComponent({
 .profile {
   .profile-picture__wrapper {
     position: sticky;
-    top: -375px;
+    top: -325px;
     transition: 0.3s;
   }
   .profile-info {
