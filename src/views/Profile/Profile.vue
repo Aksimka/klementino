@@ -40,7 +40,6 @@
 <script lang="ts">
 /* eslint-disable */
 import { defineComponent, reactive, toRefs, ref, onMounted } from 'vue'
-import useStagedSticky from '@/views/Profile/hooks/useStagedSticky'
 import ProfilePicture from '@/views/Profile/blocks/ProfilePicture.vue'
 import Text from '@/components/ui/Text/Text.vue'
 import Container from '@/components/ui/Container/Container.vue'
@@ -78,15 +77,6 @@ export default defineComponent({
     const sectionWrapper = ref<HTMLDivElement | null>(null)
     const pictureWrapper = ref<HTMLDivElement | null>(null)
 
-    onMounted(() => {
-      if (sectionWrapper.value && pictureWrapper.value) {
-        useStagedSticky<HTMLDivElement>(
-          sectionWrapper.value,
-          pictureWrapper.value
-        )
-      }
-    })
-
     return { ...toRefs(state), sectionWrapper, pictureWrapper }
   },
 })
@@ -94,10 +84,9 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .profile {
-  height: 100%;
   .profile-picture__wrapper {
     position: sticky;
-    top: -500px;
+    top: -400px;
     transition: 0.3s;
   }
   .profile-info {
