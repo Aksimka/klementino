@@ -3,6 +3,29 @@
     <div ref="pictureWrapper" class="profile-picture__wrapper">
       <ProfilePicture />
     </div>
+    <Container class="profile-actions">
+      <RoundButton class="profile-action background_dislike">
+        <SvgIcon
+          class="profile-action__icon color_dislike"
+          name="cross"
+          :size="24"
+        />
+      </RoundButton>
+      <RoundButton class="profile-action background_like">
+        <SvgIcon
+          class="picture-action__icon color_like"
+          :size="48"
+          name="heart"
+        />
+      </RoundButton>
+      <RoundButton class="profile-action background_favorite">
+        <SvgIcon
+          class="picture-action__icon color_favorite"
+          name="star"
+          :size="24"
+        />
+      </RoundButton>
+    </Container>
     <Container class="profile-info">
       <DescriptionElement class="profile-info__element">
         <template #header>
@@ -47,10 +70,14 @@ import Heading from '@/components/ui/Heading/Heading.vue'
 import DescriptionElement from '@/views/Profile/components/DescriptionElement.vue'
 import Chip from '@/components/ui/Chip/Chip.vue'
 import ChipsGroup from '@/components/ui/ChipsGroup/ChipsGroup.vue'
+import RoundButton from "@/components/ui/RoundButton/RoundButton.vue";
+import SvgIcon from "@/components/SvgIcon.vue";
 
 export default defineComponent({
   name: 'Main',
   components: {
+    SvgIcon,
+    RoundButton,
     ChipsGroup,
     Chip,
     DescriptionElement,
@@ -84,14 +111,22 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .profile {
-  .profile-picture__wrapper {
-    position: sticky;
-    top: -325px;
-    transition: 0.3s;
+  width: calc(100% - 16px);
+  margin: 0 auto;
+  .profile-actions {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    position: fixed;
+    bottom: calc(8px + var(--nav-heigth));
+    width: 100%;
+    .profile-action {
+      background-color: var(--color-background-main);
+    }
   }
   .profile-info {
     height: 1500px;
-    padding-top: 70px;
+    padding-top: 40px;
     .profile-info__element {
       &:not(:last-child) {
         margin-bottom: 32px;
