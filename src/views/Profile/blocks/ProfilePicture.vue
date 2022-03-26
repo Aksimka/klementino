@@ -39,7 +39,7 @@
 
 <script>
 import { defineComponent } from 'vue'
-import BackButton from '@/components/ui/BackButton/BackButton.vue'
+import BackButton from '../components/BackButton.vue'
 import Container from '@/components/ui/Container/Container.vue'
 import RoundButton from '@/components/ui/RoundButton/RoundButton.vue'
 import SvgIcon from '@/components/SvgIcon.vue'
