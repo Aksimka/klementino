@@ -8,21 +8,21 @@
         <SvgIcon
           class="profile-action__icon color_dislike"
           name="cross"
-          :size="24"
+          :size="decreaseButton ? 22 : 34"
         />
       </RoundButton>
       <RoundButton class="profile-action background_like">
         <SvgIcon
-          class="picture-action__icon color_like"
-          :size="48"
-          name="heart"
+          class="picture-action__icon color_favorite"
+          :size="decreaseButton ? 22 : 34"
+          name="star"
         />
       </RoundButton>
       <RoundButton class="profile-action background_favorite">
         <SvgIcon
-          class="picture-action__icon color_favorite"
-          name="star"
-          :size="24"
+          class="picture-action__icon color_like"
+          name="heart"
+          :size="decreaseButton ? 22 : 34"
         />
       </RoundButton>
     </Container>
@@ -61,7 +61,6 @@
 </template>
 
 <script lang="ts">
-/* eslint-disable */
 import { defineComponent, reactive, toRefs, ref } from 'vue'
 import ProfilePicture from '@/views/Profile/blocks/ProfilePicture.vue'
 import Text from '@/components/ui/Text/Text.vue'
@@ -70,8 +69,8 @@ import Heading from '@/components/ui/Heading/Heading.vue'
 import DescriptionElement from '@/views/Profile/components/DescriptionElement.vue'
 import Chip from '@/components/ui/Chip/Chip.vue'
 import ChipsGroup from '@/components/ui/ChipsGroup/ChipsGroup.vue'
-import RoundButton from "@/components/ui/RoundButton/RoundButton.vue";
-import SvgIcon from "@/components/SvgIcon.vue";
+import RoundButton from '@/components/ui/RoundButton/RoundButton.vue'
+import SvgIcon from '@/components/SvgIcon.vue'
 
 export default defineComponent({
   name: 'Main',
@@ -89,6 +88,7 @@ export default defineComponent({
   setup() {
     const state = reactive({
       inputValue: null,
+      decreaseButton: false,
       chips: [
         'qweqwe',
         'qwe',
@@ -101,8 +101,14 @@ export default defineComponent({
       ],
     })
 
+    document.addEventListener('scroll', () => {
+      state.decreaseButton = window.scrollY > 10
+    })
+
     const sectionWrapper = ref<HTMLDivElement | null>(null)
     const pictureWrapper = ref<HTMLDivElement | null>(null)
+
+    console.log(state, 'state')
 
     return { ...toRefs(state), sectionWrapper, pictureWrapper }
   },
@@ -113,6 +119,7 @@ export default defineComponent({
 .profile {
   width: calc(100% - 16px);
   margin: 0 auto;
+  border-radius: 40px;
   .profile-actions {
     display: flex;
     justify-content: space-around;

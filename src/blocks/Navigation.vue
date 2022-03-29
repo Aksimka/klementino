@@ -31,6 +31,7 @@ export default defineComponent({
   height: var(--nav-heigth);
   background-color: var(--color-background-main);
   position: fixed;
+  z-index: 10;
   bottom: 0;
   left: 0;
   box-shadow: var(--shadow-m);

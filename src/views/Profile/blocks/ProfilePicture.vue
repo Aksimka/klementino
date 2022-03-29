@@ -1,5 +1,14 @@
 <template>
   <div class="picture-layout">
+    <div class="picture-layout-top">
+      <div class="d-flex">
+        <div class="picture-layout__name">Aksimka, 24</div>
+        <span
+          class="picture-layout__online online-flag"
+          :class="{ online: true }"
+        ></span>
+      </div>
+    </div>
     <div class="picture-layout__image">
       <div class="picture-layout__blackout"></div>
       <img src="@/assets/images/dg.png" alt="profile image" />
@@ -18,16 +27,34 @@ export default defineComponent({
 <style scoped lang="scss">
 .picture-layout {
   display: flex;
-  //height: 430px;
   position: relative;
   height: calc(100vh - var(--header-heigth) - var(--nav-heigth));
+  .picture-layout-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    z-index: 2;
+    padding: 0 32px;
+  }
+  .picture-layout__name {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--color-background-main);
+  }
+  .picture-layout__online {
+    margin-left: 4px;
+  }
   .picture-layout__blackout {
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.3);
   }
   .picture-layout__image {
     position: relative;

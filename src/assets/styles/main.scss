@@ -25,3 +25,14 @@ html, body {
   justify-content: center;
   align-items: center;
 }
+
+.online-flag {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid var(--color-main-text);
+}
+
+.online-flag.online {
+  background-color: var(--color-success);
+}

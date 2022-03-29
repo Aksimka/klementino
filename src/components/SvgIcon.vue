@@ -61,7 +61,6 @@ export default defineComponent({
 <style lang="scss">
 .svg-icon {
   fill: currentColor;
-  height: 24px;
-  width: 24px;
+  transition: 0.2s;
 }
 </style>

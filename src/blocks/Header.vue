@@ -33,7 +33,7 @@ export default {
   left: 0;
   width: 100%;
   height: var(--header-heigth);
-  z-index: 2;
+  z-index: 10;
   background-color: var(--color-background-main);
   padding: 0 16px;
   .header-logo {
