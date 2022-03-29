@@ -4,7 +4,7 @@ module.exports = {
   },
   pluginOptions: {
     svgSprite: {
-      dir: 'public/assets/icons',
+      dir: 'src/assets/icons',
       test: /\.(svg)(\?.*)?$/,
       loaderOptions: {
         extract: true,
