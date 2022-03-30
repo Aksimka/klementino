@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
-import Profile from '@/views/Profile/Profile.vue'
-import Likes from '@/views/Likes/Likes.vue'
+import Profile from '@/views/Profile/views/Profile.vue'
+import Likes from '@/views/Likes/views/Likes.vue'
 import Chats from '@/views/Chats/Chats.vue'
 import UserInfo from '@/views/UserInfo/UserInfo.vue'
 
