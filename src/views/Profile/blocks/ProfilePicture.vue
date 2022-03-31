@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="picture-layout__image">
-      <div class="picture-layout__blackout"></div>
+      <div class="blackout-layer"></div>
       <img src="@/assets/images/dg.png" alt="profile image" />
     </div>
   </div>
@@ -47,14 +47,6 @@ export default defineComponent({
   }
   .picture-layout__online {
     margin-left: 4px;
-  }
-  .picture-layout__blackout {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
   }
   .picture-layout__image {
     position: relative;

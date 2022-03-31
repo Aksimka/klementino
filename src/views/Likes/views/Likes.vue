@@ -1,5 +1,5 @@
 <template>
-  <Container>
+  <Container class="likes">
     <div class="likes-header">
       <div class="likes-header__text">Matches</div>
       <div class="likes-header-actions">
@@ -7,25 +7,64 @@
       </div>
     </div>
     <div class="likes-content">
-      <div class="likes-content-section">
+      <div
+        v-for="section in cards"
+        :key="section.title"
+        class="likes-content-section"
+      >
         <div class="likes-content-section__separator">
-          <HorizontalSeparator>Today</HorizontalSeparator>
+          <HorizontalSeparator>{{ section.title }}</HorizontalSeparator>
+        </div>
+        <div class="likes-content-section-cards">
+          <div
+            v-for="card in section.count"
+            :key="`${section.title}@${card}`"
+            class="likes-content-section__card-wrapper"
+          >
+            <ProfileCard />
+          </div>
         </div>
       </div>
     </div>
   </Container>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, reactive, toRefs } from 'vue'
 import Container from '@/components/ui/Container/Container'
 import HorizontalSeparator from '@/views/Likes/components/HorizontalSeparator'
-export default {
+import ProfileCard from '@/views/Likes/components/ProfileCard'
+
+export default defineComponent({
   name: 'Likes',
-  components: { HorizontalSeparator, Container },
-}
+  components: { ProfileCard, HorizontalSeparator, Container },
+  setup() {
+    const state = reactive({
+      cards: [
+        {
+          title: 'today',
+          count: 3,
+        },
+        {
+          title: 'tomorrow',
+          count: 1,
+        },
+        {
+          title: '29.03',
+          count: 4,
+        },
+      ],
+    })
+
+    return { ...toRefs(state) }
+  },
+})
 </script>
 
 <style scoped lang="scss">
+.likes {
+  padding-bottom: var(--nav-heigth);
+}
 .likes-header {
   .likes-header__text {
     font-size: 38px;
@@ -34,6 +73,18 @@ export default {
   }
 }
 .likes-content {
-  margin-top: 16px;
+  .likes-content-section {
+    margin-top: 16px;
+    .likes-content-section-cards {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      .likes-content-section__card-wrapper {
+        width: 48%;
+        height: 200px;
+        margin-top: 16px;
+      }
+    }
+  }
 }
 </style>
