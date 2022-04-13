@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import Profile from '@/views/Profile/views/Profile.vue'
 import Likes from '@/views/Likes/views/Likes.vue'
 import Chats from '@/views/Chats/Chats.vue'
-import UserInfo from '@/views/UserInfo/UserInfo.vue'
+import UserInfo from '@/views/UserInfo/views/UserInfo.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
