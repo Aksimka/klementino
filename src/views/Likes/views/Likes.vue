@@ -31,9 +31,9 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue'
-import Container from '@/components/ui/Container/Container'
-import HorizontalSeparator from '@/views/Likes/components/HorizontalSeparator'
-import ProfileCard from '@/views/Likes/components/ProfileCard'
+import Container from '@/components/ui/Container/Container.vue'
+import HorizontalSeparator from '@/views/Likes/components/HorizontalSeparator.vue'
+import ProfileCard from '@/views/Likes/components/ProfileCard.vue'
 
 export default defineComponent({
   name: 'Likes',
