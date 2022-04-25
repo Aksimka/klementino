@@ -13,7 +13,7 @@ export default defineComponent({
   props: {
     type: {
       type: String as PropType<HeadingTypes>,
-      required: true,
+      default: '3',
     },
     weight: {
       type: String as PropType<FontWeight>,

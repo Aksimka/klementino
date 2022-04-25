@@ -1,7 +1,9 @@
 <template>
   <Container class="likes">
     <div class="likes-header">
-      <div class="likes-header__text">Matches</div>
+      <Heading weight="bold" type="1" class="likes-header__text">
+        Matches
+      </Heading>
       <div class="likes-header-actions">
         <div class="likes-header-action"></div>
       </div>
@@ -34,10 +36,11 @@ import { defineComponent, reactive, toRefs } from 'vue'
 import Container from '@/components/ui/Container/Container.vue'
 import HorizontalSeparator from '@/views/Likes/components/HorizontalSeparator.vue'
 import ProfileCard from '@/views/Likes/components/ProfileCard.vue'
+import Heading from '@/components/ui/Heading/Heading.vue'
 
 export default defineComponent({
   name: 'Likes',
-  components: { ProfileCard, HorizontalSeparator, Container },
+  components: { Heading, ProfileCard, HorizontalSeparator, Container },
   setup() {
     const state = reactive({
       cards: [
