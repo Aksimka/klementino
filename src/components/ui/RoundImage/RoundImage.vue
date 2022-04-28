@@ -11,7 +11,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import NoImg from '@/assets/images/no-img.jpg'
 
 export default defineComponent({
   name: 'RoundImage',
@@ -19,7 +18,7 @@ export default defineComponent({
   props: {
     img: {
       type: String,
-      default: NoImg,
+      default: 'images/no-img.jpg',
     },
     size: {
       type: String,
