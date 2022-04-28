@@ -1,9 +1,11 @@
 <template>
   <Container class="chats">
     <div>
-      <Heading> Matches </Heading>
-      <div class="chats__matches d-flex">
-        <UserAvatar v-for="i in 7" :key="i" class="chat__match" />
+      <Heading weight="bold"> Matches </Heading>
+      <div class="chats__likes d-flex">
+        <div v-for="i in 7" :key="i" class="chat__like">
+          <UserAvatar image="images/dg.png" />
+        </div>
       </div>
     </div>
   </Container>
@@ -21,12 +23,17 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.chats__matches {
+.chats__likes {
   max-width: 100%;
   overflow-x: scroll;
-  padding-bottom: 12px;
-  .chat__match {
+  padding-bottom: 8px;
+  margin-top: 8px;
+  .chat__like {
+    width: 60px;
     margin-right: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 }
 </style>

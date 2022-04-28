@@ -1,7 +1,7 @@
 <template>
-  <div class="round-image">
+  <div class="round-image" :style="{ width: size, height: size }">
     <img
-      :src="img"
+      :src="require(`@/assets/${img}`)"
       v-bind="$attrs"
       :alt="$attrs.alt || 'Аватар пользователя'"
       :style="{ width: size, height: size }"
@@ -9,29 +9,39 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+import NoImg from '@/assets/images/no-img.jpg'
+
+export default defineComponent({
   name: 'RoundImage',
   inheritAttrs: false,
   props: {
     img: {
       type: String,
-      default: './no-img.jpg',
+      default: NoImg,
     },
     size: {
       type: String,
       default: '50px',
     },
   },
-}
+})
 </script>
 
 <style scoped lang="scss">
 .round-image {
-  border-radius: 50%;
-  overflow: hidden;
+  position: relative;
+  display: inline-block;
   img {
     display: inline-block;
+    border-radius: 50%;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
 }
 </style>
