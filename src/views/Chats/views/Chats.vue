@@ -1,11 +1,10 @@
 <template>
   <Container class="chats">
-    <div>
-      <Heading weight="bold"> Matches </Heading>
-      <div class="chats__likes d-flex">
-        <div v-for="i in 7" :key="i" class="chat__like">
-          <UserAvatar image="images/dg.png" />
-        </div>
+    <Heading weight="bold"> Matches </Heading>
+    <div class="chats__likes d-flex">
+      <UserAvatar class="mr-3" accent name="Likes" image="images/dg.png" />
+      <div v-for="i in 7" :key="i" class="chat__like">
+        <UserAvatar image="images/dg.png" />
       </div>
     </div>
   </Container>
@@ -26,11 +25,10 @@ export default {
 .chats__likes {
   max-width: 100%;
   overflow-x: scroll;
-  padding-bottom: 8px;
   margin-top: 8px;
+  padding: 4px 4px 8px 4px;
   .chat__like {
-    width: 60px;
-    margin-right: 8px;
+    margin-right: 12px;
     display: flex;
     flex-direction: column;
     justify-content: center;

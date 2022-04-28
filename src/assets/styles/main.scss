@@ -58,17 +58,17 @@ html, body {
 }
 
 @for $i from 1 through 10 {
-  mt-#{$i} {
-    margin-top: (4 * 1)px;
+  .mt-#{$i} {
+    margin-top: calc(4px * #{$i});
   }
-  mb-#{$i} {
-    margin-bottom: (4 * 1)px;
+  .mb-#{$i} {
+    margin-bottom: calc(4px * #{$i});
   }
-  ml-#{$i} {
-    margin-left: (4 * 1)px;
+  .ml-#{$i} {
+    margin-left: calc(4px * #{$i});
   }
-  mr-#{$i} {
-    margin-right: (4 * 1)px;
+  .mr-#{$i} {
+    margin-right: calc(4px * #{$i});
   }
 }
 
