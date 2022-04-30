@@ -1,6 +1,7 @@
 <template>
   <div class="user-avatar">
     <span class="online-flag" :class="{ online: online }"></span>
+    <Badge icon="heart" text="5" />
     <div class="user-avatar__image display-center">
       <div class="accent__border" :class="{ active: accent }"></div>
       <RoundImage size="80px" :img="image" />
@@ -8,7 +9,11 @@
         <slot name="tags"></slot>
       </div>
     </div>
-    <Text weight="500" :size="14" class="text-center one-ellipsis mt-1">
+    <Text
+      :weight="!accent ? 500 : 600"
+      :size="14"
+      class="text-center one-ellipsis mt-1"
+    >
       {{ name }}
     </Text>
   </div>
@@ -18,10 +23,11 @@
 import RoundImage from '@/components/ui/RoundImage/RoundImage'
 import Text from '@/components/ui/Text/Text'
 import { defineComponent } from 'vue'
+import Badge from "@/components/ui/Badge/Badge";
 
 export default defineComponent({
   name: 'UserAvatar',
-  components: { Text, RoundImage },
+  components: { Badge, Text, RoundImage },
   props: {
     online: {
       type: Boolean,
