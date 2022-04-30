@@ -7,7 +7,7 @@
         <Badge icon="heart" text="5" />
       </span>
       <div class="user-avatar__images-collection">
-        <RoundImage v-for="img in images" :key="img" size="80px" :img="img" />
+        <RoundImage size="80px" :img="images[currentImageIndex]" />
       </div>
       <div class="user-avatar__tags">
         <slot name="tags"></slot>
@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref, onMounted, toRefs } from 'vue'
 import RoundImage from '@/components/ui/RoundImage/RoundImage'
 import Text from '@/components/ui/Text/Text'
 import Badge from '@/components/ui/Badge/Badge'
@@ -49,6 +49,24 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+  },
+  setup(props) {
+    const { images } = toRefs(props)
+    let currentImageIndex = ref(0)
+    const intervalFunc = () => {
+      if (currentImageIndex.value >= images.value?.length - 1) {
+        currentImageIndex.value = 0
+      } else {
+        currentImageIndex.value += 1
+      }
+    }
+    onMounted(() => {
+      if (images.value?.length > 1) {
+        setInterval(intervalFunc, 2000)
+      }
+    })
+
+    return { currentImageIndex }
   },
 })
 </script>

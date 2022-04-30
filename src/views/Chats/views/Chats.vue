@@ -6,7 +6,7 @@
         class="mr-3"
         accent
         name="Likes"
-        :images="['images/dg.png']"
+        :images="['images/dg.png', 'images/no-img.jpg']"
       />
       <div v-for="i in 7" :key="i" class="chat__like">
         <UserAvatar :images="['images/dg.png']" />
