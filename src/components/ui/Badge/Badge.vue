@@ -1,9 +1,9 @@
 <template>
-  <span class="badge">
-    <span v-if="icon" class="badge__icon">
-      <SvgIcon :name="icon"></SvgIcon>
+  <span class="badge" :class="{ badge_full: icon && text }">
+    <span v-if="icon" class="badge__icon display-center">
+      <SvgIcon :size="14" :name="icon"></SvgIcon>
     </span>
-    <span v-if="text" class="badge__text">
+    <span v-if="text" class="badge__text display-center">
       {{ text }}
     </span>
   </span>
@@ -31,11 +31,22 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .badge {
-  display: inline-block;
-  background-color: var(--color-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-primary-faded);
   color: var(--color-primary);
+  padding: 4px 8px;
+  font-size: 14px;
   .badge__icon {
     font-size: 16px;
   }
+  .badge__text {
+    margin-left: 4px;
+    line-height: 14px;
+  }
+}
+.badge.badge_full {
+  border-radius: 12px;
 }
 </style>

@@ -2,9 +2,14 @@
   <Container class="chats">
     <Heading weight="bold"> Matches </Heading>
     <div class="chats__likes d-flex">
-      <UserAvatar class="mr-3" accent name="Likes" image="images/dg.png" />
+      <UserAvatar
+        class="mr-3"
+        accent
+        name="Likes"
+        :images="['images/dg.png']"
+      />
       <div v-for="i in 7" :key="i" class="chat__like">
-        <UserAvatar image="images/dg.png" />
+        <UserAvatar :images="['images/dg.png']" />
       </div>
     </div>
   </Container>
