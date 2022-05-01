@@ -1,10 +1,9 @@
 <template>
-  <div class="round-image" :style="{ width: size, height: size }">
+  <div class="round-image">
     <img
       :src="require(`@/assets/${img}`)"
       v-bind="$attrs"
       :alt="$attrs.alt || 'Аватар пользователя'"
-      :style="{ width: size, height: size }"
     />
   </div>
 </template>
@@ -14,15 +13,10 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'RoundImage',
-  inheritAttrs: false,
   props: {
     img: {
       type: String,
       default: 'images/no-img.jpg',
-    },
-    size: {
-      type: String,
-      default: '50px',
     },
   },
 })

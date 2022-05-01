@@ -57,7 +57,18 @@ html, body {
   overflow: hidden;
 }
 
+.o-hidden {
+  overflow: hidden;
+}
+
+.relative {
+  position: relative;
+}
+
 @for $i from 1 through 10 {
+  .ma-#{$i} {
+    margin: calc(4px * #{$i});
+  }
   .mt-#{$i} {
     margin-top: calc(4px * #{$i});
   }
@@ -69,6 +80,22 @@ html, body {
   }
   .mr-#{$i} {
     margin-right: calc(4px * #{$i});
+  }
+
+  .pa-#{$i} {
+    padding: calc(4px * #{$i});
+  }
+  .pt-#{$i} {
+    padding-top: calc(4px * #{$i});
+  }
+  .pb-#{$i} {
+    padding-bottom: calc(4px * #{$i});
+  }
+  .pl-#{$i} {
+    padding-left: calc(4px * #{$i});
+  }
+  .pr-#{$i} {
+    padding-right: calc(4px * #{$i});
   }
 }
 

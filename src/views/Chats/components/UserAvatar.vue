@@ -1,13 +1,29 @@
 <template>
   <div class="user-avatar">
-    <span class="online-flag" :class="{ online: online }"></span>
-    <div class="user-avatar__image display-center">
+    <div
+      class="user-avatar__image-wrapper relative display-center pa-1 o-hidden"
+    >
       <div class="accent__border" :class="{ active: accent }"></div>
-      <span v-if="accent" class="badge-wrapper">
-        <Badge icon="heart" text="5" />
-      </span>
-      <div class="user-avatar__images-collection">
-        <RoundImage size="80px" :img="images[currentImageIndex]" />
+      <div class="relative">
+        <span class="online-flag" :class="{ online: online }"></span>
+        <span v-if="accent" class="badge-wrapper">
+          <Badge icon="heart" text="5" />
+        </span>
+        <TransitionGroup
+          class="user-avatar__images"
+          tag="div"
+          mode="out-in"
+          name="swipe"
+        >
+          <template v-for="img in images" :key="img">
+            <img
+              v-show="img === images[currentImageIndex]"
+              class="user-avatar__image"
+              :src="require(`@/assets/${img}`)"
+              alt="avatar"
+            />
+          </template>
+        </TransitionGroup>
       </div>
       <div class="user-avatar__tags">
         <slot name="tags"></slot>
@@ -25,9 +41,9 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted, toRefs } from 'vue'
-import RoundImage from '@/components/ui/RoundImage/RoundImage'
-import Text from '@/components/ui/Text/Text'
-import Badge from '@/components/ui/Badge/Badge'
+import RoundImage from '@/components/ui/RoundImage/RoundImage.vue'
+import Text from '@/components/ui/Text/Text.vue'
+import Badge from '@/components/ui/Badge/Badge.vue'
 
 export default defineComponent({
   name: 'UserAvatar',
@@ -76,14 +92,26 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   position: relative;
+  .user-avatar__image-wrapper {
+    border-radius: 50%;
+  }
+  .user-avatar__images {
+    height: 88px;
+    width: 88px;
+    padding: 4px;
+  }
+  .user-avatar__image {
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    width: calc(100% + 8px);
+    height: calc(100% + 8px);
+  }
   .badge-wrapper {
     position: absolute;
     z-index: 3;
     bottom: 4px;
     right: 0;
-  }
-  .user-avatar__image {
-    position: relative;
   }
   .online-flag {
     position: absolute;
@@ -99,10 +127,10 @@ export default defineComponent({
 .accent__border {
   display: none;
   position: absolute;
-  top: -4px;
-  left: -4px;
-  width: calc(100% + 8px);
-  height: calc(100% + 8px);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   animation-name: test;
   animation-timing-function: linear;
@@ -113,6 +141,18 @@ export default defineComponent({
 
 .accent__border.active {
   display: block;
+}
+
+.swipe-enter-active,
+.swipe-leave-active {
+  transition: 0.5s ease;
+}
+
+.swipe-enter-from {
+  transform: translateX(88px);
+}
+.swipe-leave-to {
+  transform: translateX(-88px);
 }
 
 @keyframes test {
