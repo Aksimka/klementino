@@ -39,13 +39,12 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted, toRefs } from 'vue'
-import RoundImage from '@/components/ui/RoundImage/RoundImage.vue'
 import Text from '@/components/ui/Text/Text.vue'
 import Badge from '@/components/ui/Badge/Badge.vue'
 
 export default defineComponent({
   name: 'UserAvatar',
-  components: { Badge, Text, RoundImage },
+  components: { Badge, Text },
   props: {
     online: {
       type: Boolean,

@@ -1,8 +1,9 @@
-@import "variables";
-@import "reset";
-@import "forms";
+@import 'variables';
+@import 'reset';
+@import 'forms';
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -107,4 +108,3 @@ html, body {
     padding-right: calc(4px * #{$i});
   }
 }
-
