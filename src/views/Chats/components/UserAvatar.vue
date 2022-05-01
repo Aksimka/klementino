@@ -1,16 +1,14 @@
 <template>
   <div class="user-avatar">
-    <div
-      class="user-avatar__image-wrapper relative display-center pa-1 o-hidden"
-    >
+    <div class="user-avatar__image-wrapper relative">
       <div class="accent__border" :class="{ active: accent }"></div>
-      <div class="relative">
+      <div class="relative full-size rounded">
         <span class="online-flag" :class="{ online: online }"></span>
         <span v-if="accent" class="badge-wrapper">
           <Badge icon="heart" text="5" />
         </span>
         <TransitionGroup
-          class="user-avatar__images"
+          class="user-avatar__images full-size relative"
           tag="div"
           mode="out-in"
           name="swipe"
@@ -93,19 +91,19 @@ export default defineComponent({
   flex-direction: column;
   position: relative;
   .user-avatar__image-wrapper {
-    border-radius: 50%;
+    height: 84px;
+    width: 84px;
   }
   .user-avatar__images {
-    height: 88px;
-    width: 88px;
-    padding: 4px;
+    overflow: hidden;
+    border-radius: 50%;
   }
   .user-avatar__image {
     position: absolute;
-    top: -4px;
-    left: -4px;
-    width: calc(100% + 8px);
-    height: calc(100% + 8px);
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
   }
   .badge-wrapper {
     position: absolute;
@@ -127,10 +125,10 @@ export default defineComponent({
 .accent__border {
   display: none;
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: -4px;
+  left: -4px;
+  width: calc(100% + 8px);
+  height: calc(100% + 8px);
   border-radius: 50%;
   animation-name: test;
   animation-timing-function: linear;
@@ -149,10 +147,10 @@ export default defineComponent({
 }
 
 .swipe-enter-from {
-  transform: translateX(88px);
+  transform: translateX(84px);
 }
 .swipe-leave-to {
-  transform: translateX(-88px);
+  transform: translateX(-84px);
 }
 
 @keyframes test {

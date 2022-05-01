@@ -31,8 +31,7 @@ export default {
   max-width: 100%;
   overflow-x: scroll;
   margin-top: 8px;
-  padding-top: 4px;
-  padding-bottom: 8px;
+  padding: 4px 0px 8px 4px;
   .chat__like {
     margin-right: 12px;
     display: flex;
