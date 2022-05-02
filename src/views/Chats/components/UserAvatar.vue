@@ -103,6 +103,7 @@ export default defineComponent({
     left: 0;
     height: 100%;
     width: 100%;
+    object-fit: cover;
   }
   .badge-wrapper {
     position: absolute;
@@ -142,7 +143,7 @@ export default defineComponent({
 
 .swipe-enter-active,
 .swipe-leave-active {
-  transition: 0.5s ease;
+  transition: 0.3s ease;
 }
 
 .swipe-enter-from {

@@ -6,7 +6,7 @@
         class="mr-3"
         accent
         name="Likes"
-        :images="['images/dg.png', 'images/no-img.jpg']"
+        :images="['images/dg.png', 'images/no-img.jpg', 'images/journal.jpeg']"
       />
       <div v-for="i in 7" :key="i" class="chat__like">
         <UserAvatar :images="['images/dg.png']" />
@@ -31,7 +31,7 @@ export default {
   max-width: 100%;
   overflow-x: scroll;
   margin-top: 8px;
-  padding: 4px 0px 8px 4px;
+  padding: 4px 0 8px 4px;
   .chat__like {
     margin-right: 12px;
     display: flex;
