@@ -5,7 +5,7 @@
       <img src="@/assets/images/dg.png" alt="profile image" />
     </div>
     <div class="profile-card-footer">
-      <div class="profile-card-footer__name">Aksimka, 24</div>
+      <div class="profile-card-footer__name">Aksimka qweqwe qwe qwe, 24</div>
       <div class="profile-card-footer__action">
         <SvgIcon name="heart-line" :size="24" />
       </div>

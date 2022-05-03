@@ -90,8 +90,8 @@ export default defineComponent({
   flex-direction: column;
   position: relative;
   .user-avatar__image-wrapper {
-    height: 84px;
-    width: 84px;
+    height: 75px;
+    width: 75px;
   }
   .user-avatar__images {
     overflow: hidden;

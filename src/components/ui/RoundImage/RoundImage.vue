@@ -26,9 +26,12 @@ export default defineComponent({
 .round-image {
   position: relative;
   display: inline-block;
+  width: 100%;
+  height: 100%;
   img {
     display: inline-block;
     border-radius: 50%;
+    object-fit: cover;
     overflow: hidden;
     position: absolute;
     top: 0;

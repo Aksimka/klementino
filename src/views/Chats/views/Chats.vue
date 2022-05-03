@@ -12,6 +12,10 @@
         <UserAvatar :images="['images/dg.png']" />
       </div>
     </div>
+    <Heading class="mt-3" weight="bold"> Chats </Heading>
+    <div>
+      <UsersListItem v-for="i in 7" :key="i" class="my-4" />
+    </div>
   </Container>
 </template>
 
@@ -19,10 +23,11 @@
 import Heading from '@/components/ui/Heading/Heading'
 import UserAvatar from '@/views/Chats/components/UserAvatar'
 import Container from '@/components/ui/Container/Container'
+import UsersListItem from '@/views/Chats/components/UsersListItem'
 
 export default {
   name: 'Chats',
-  components: { Container, UserAvatar, Heading },
+  components: { UsersListItem, Container, UserAvatar, Heading },
 }
 </script>
 
