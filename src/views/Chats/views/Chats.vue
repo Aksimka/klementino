@@ -1,7 +1,7 @@
 <template>
-  <Container class="chats">
+  <div class="chats px-2">
     <Heading weight="bold"> Matches </Heading>
-    <div class="chats__likes d-flex">
+    <div class="chats__likes d-flex mx-2">
       <UserAvatar
         class="mr-3"
         accent
@@ -13,7 +13,8 @@
       </div>
     </div>
     <Heading class="mt-3" weight="bold"> Chats </Heading>
-    <div>
+
+    <div class="ml-2">
       <UsersListItem
         v-for="i in chats"
         :key="i.id"
@@ -24,21 +25,20 @@
         :online="i.isOnline"
       />
     </div>
-  </Container>
+  </div>
 </template>
 
 <script>
 import { defineComponent, ref } from 'vue'
 import Heading from '@/components/ui/Heading/Heading'
 import UserAvatar from '@/views/Chats/components/UserAvatar'
-import Container from '@/components/ui/Container/Container'
 import UsersListItem from '@/views/Chats/components/UsersListItem'
 import likesList from '@/views/Chats/heplers/mock/likesList'
 import chatsList from '@/views/Chats/heplers/mock/chatsList'
 
 export default defineComponent({
   name: 'Chats',
-  components: { UsersListItem, Container, UserAvatar, Heading },
+  components: { UsersListItem, UserAvatar, Heading },
   setup() {
     let likes = ref(likesList)
     let chats = ref(chatsList)
@@ -49,11 +49,15 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+.chats {
+  padding-bottom: var(--nav-heigth);
+}
 .chats__likes {
   max-width: 100%;
   overflow-x: scroll;
   margin-top: 8px;
-  padding: 4px 0 8px 4px;
+  padding-top: 4px;
+  padding-left: 4px;
   &::-webkit-scrollbar {
     display: none;
   }

@@ -2,12 +2,12 @@
   <div class="user-avatar">
     <div class="user-avatar__image-wrapper relative">
       <div class="accent__border" :class="{ active: accent }"></div>
+      <span v-if="accent" class="badge-wrapper">
+        <Badge icon="heart" text="5" />
+      </span>
       <div class="relative full-size rounded">
-        <span v-if="accent" class="badge-wrapper">
-          <Badge icon="heart" text="5" />
-        </span>
         <TransitionGroup
-          class="user-avatar__images full-size relative"
+          class="user-avatar__images full-size relative o-hidden"
           tag="div"
           mode="out-in"
           name="swipe"
@@ -133,6 +133,7 @@ export default defineComponent({
 .swipe-enter-active,
 .swipe-leave-active {
   transition: 0.3s ease;
+  overflow: hidden;
 }
 
 .swipe-enter-from {
