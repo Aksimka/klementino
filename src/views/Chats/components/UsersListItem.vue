@@ -1,17 +1,17 @@
 <template>
   <div class="users-list-item">
     <div class="users-list-item__avatar">
-      <RoundImage img="images/journal.jpeg" />
+      <RoundImage :img="image" />
     </div>
     <div class="users-list-item__content ml-3 py-4">
       <div class="d-flex">
         <Heading type="6" weight="bold">
-          <span>Aksimka</span>
+          <span>{{ name }}</span>
         </Heading>
-        <span class="online-flag online ml-1"></span>
+        <span class="online-flag ml-1" :class="{ online }"></span>
       </div>
       <Text class="users-list-item__last-message mt-1" weight="300" :size="16">
-        На самом деле это из какого-то фильма. Выходи за меня!!!
+        {{ text }}
       </Text>
     </div>
   </div>
@@ -24,6 +24,24 @@ import Text from '@/components/ui/Text/Text'
 export default {
   name: 'UsersListItem',
   components: { Text, Heading, RoundImage },
+  props: {
+    text: {
+      type: String,
+      default: '',
+    },
+    name: {
+      type: String,
+      default: 'No name',
+    },
+    image: {
+      type: String,
+      default: 'images/dg.png',
+    },
+    online: {
+      type: Boolean,
+      default: false,
+    },
+  },
 }
 </script>
 

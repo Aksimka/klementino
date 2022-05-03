@@ -33,6 +33,10 @@ body {
   border-radius: 50%;
 }
 
+.online-flag.bordered {
+  border: 1px solid var(--color-main-text);
+}
+
 .online-flag.online {
   background-color: var(--color-success);
 }

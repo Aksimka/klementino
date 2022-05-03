@@ -3,7 +3,6 @@
     <div class="user-avatar__image-wrapper relative">
       <div class="accent__border" :class="{ active: accent }"></div>
       <div class="relative full-size rounded">
-        <span class="online-flag" :class="{ online: online }"></span>
         <span v-if="accent" class="badge-wrapper">
           <Badge icon="heart" text="5" />
         </span>
@@ -110,16 +109,6 @@ export default defineComponent({
     z-index: 3;
     bottom: 4px;
     right: 0;
-  }
-  .online-flag {
-    position: absolute;
-    right: 4px;
-    top: 4px;
-    z-index: 2;
-    display: none;
-  }
-  .online-flag.online {
-    display: block;
   }
 }
 .accent__border {
