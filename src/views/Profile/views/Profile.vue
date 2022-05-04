@@ -1,5 +1,9 @@
 <template>
-  <div ref="sectionWrapper" class="profile">
+  <div
+    ref="sectionWrapper"
+    class="profile"
+    :class="{ 'fixed-swipe': dragOffset !== 0 }"
+  >
     <div
       ref="pictureWrapper"
       v-touch:drag="swipeHandler"
@@ -128,6 +132,7 @@ export default defineComponent({
       currentTouchEvent,
       swipeSide,
       stylesByPosition,
+      dragOffset,
       swipeHandler,
       startSwipe,
       endSwipe,
@@ -147,6 +152,7 @@ export default defineComponent({
       stylesByPosition,
       currentTouchEvent,
       swipeSide,
+      dragOffset,
       swipeHandler,
       startSwipe,
       endSwipe,
@@ -190,6 +196,9 @@ export default defineComponent({
       margin: 8px 0 0 8px;
     }
   }
+}
+.fixed-swipe {
+  touch-action: pan-x;
 }
 .smooth {
   transition: 0.3s;
