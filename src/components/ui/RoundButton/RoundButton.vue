@@ -17,11 +17,10 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style>
 .round-button {
   padding: 20px;
   border-radius: 50%;
   box-shadow: var(--shadow-m);
-  background-color: var(--color-background-main);
 }
 </style>

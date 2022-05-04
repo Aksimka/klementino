@@ -1,26 +1,48 @@
 <template>
   <div ref="sectionWrapper" class="profile">
-    <div ref="pictureWrapper" class="profile-picture__wrapper">
+    <div
+      ref="pictureWrapper"
+      v-touch:drag="swipeHandler"
+      class="profile-picture__wrapper"
+      :class="{ smooth: !currentTouchEvent }"
+      :style="stylesByPosition"
+      @touchstart="startSwipe"
+      @touchend="endSwipe"
+    >
       <ProfilePicture />
     </div>
     <Container class="profile-actions">
-      <RoundButton class="profile-action background_dislike">
+      <RoundButton
+        class="button-dislike profile-action"
+        :class="[
+          `${swipeSide === 'left' ? 'background_dislike' : 'background_main'}`,
+          { active: swipeSide === 'left' },
+        ]"
+      >
         <SvgIcon
           class="profile-action__icon color_dislike"
+          :class="{ color_main: swipeSide === 'left' }"
           name="cross"
           :size="decreaseButton ? 22 : 34"
         />
       </RoundButton>
-      <RoundButton class="profile-action background_like">
+      <RoundButton class="profile-action background_main">
         <SvgIcon
           class="picture-action__icon color_favorite"
           :size="decreaseButton ? 22 : 34"
           name="star"
         />
       </RoundButton>
-      <RoundButton class="profile-action background_favorite">
+      <RoundButton
+        class="button-like profile-action"
+        :class="[
+          `${swipeSide === 'right' ? 'background_like' : 'background_main'}`,
+          { active: swipeSide === 'right' },
+        ]"
+      >
         <SvgIcon
           class="picture-action__icon color_like"
+          :class="{ color_main: swipeSide === 'right' }"
           name="heart"
           :size="decreaseButton ? 22 : 34"
         />
@@ -71,6 +93,7 @@ import Chip from '@/components/ui/Chip/Chip.vue'
 import ChipsGroup from '@/components/ui/ChipsGroup/ChipsGroup.vue'
 import RoundButton from '@/components/ui/RoundButton/RoundButton.vue'
 import SvgIcon from '@/components/SvgIcon.vue'
+import useSwipe from '../hooks/useSwipe'
 
 export default defineComponent({
   name: 'Main',
@@ -101,6 +124,15 @@ export default defineComponent({
       ],
     })
 
+    const {
+      currentTouchEvent,
+      swipeSide,
+      stylesByPosition,
+      swipeHandler,
+      startSwipe,
+      endSwipe,
+    } = useSwipe()
+
     document.addEventListener('scroll', () => {
       state.decreaseButton = window.scrollY > 10
     })
@@ -108,18 +140,30 @@ export default defineComponent({
     const sectionWrapper = ref<HTMLDivElement | null>(null)
     const pictureWrapper = ref<HTMLDivElement | null>(null)
 
-    console.log(state, 'state')
-
-    return { ...toRefs(state), sectionWrapper, pictureWrapper }
+    return {
+      ...toRefs(state),
+      sectionWrapper,
+      pictureWrapper,
+      stylesByPosition,
+      currentTouchEvent,
+      swipeSide,
+      swipeHandler,
+      startSwipe,
+      endSwipe,
+    }
   },
 })
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .profile {
   width: calc(100% - 16px);
   margin: 0 auto;
   border-radius: 40px;
+  overflow: hidden;
+  .prepare-action {
+    transform: scale(0.7);
+  }
   .profile-actions {
     display: flex;
     justify-content: space-around;
@@ -127,9 +171,12 @@ export default defineComponent({
     position: fixed;
     bottom: calc(8px + var(--nav-heigth));
     width: 100%;
-    .profile-action {
-      background-color: var(--color-background-main);
-    }
+  }
+  .profile-action {
+    transition: 0.3s;
+  }
+  .profile-action.active {
+    transform: scale(1.2);
   }
   .profile-info {
     height: 1500px;
@@ -143,5 +190,9 @@ export default defineComponent({
       margin: 8px 0 0 8px;
     }
   }
+}
+.smooth {
+  transition: 0.3s;
+  transition-timing-function: ease-out;
 }
 </style>

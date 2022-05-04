@@ -8,7 +8,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .default-button {
   border: 0;
 }
