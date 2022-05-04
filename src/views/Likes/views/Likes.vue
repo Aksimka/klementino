@@ -10,7 +10,7 @@
     </div>
     <div class="likes-content">
       <div
-        v-for="section in cards"
+        v-for="section in sections"
         :key="section.title"
         class="likes-content-section"
       >
@@ -19,11 +19,15 @@
         </div>
         <div class="likes-content-section-cards">
           <div
-            v-for="card in section.count"
-            :key="`${section.title}@${card}`"
+            v-for="card in section.cards"
+            :key="`${section.title}@${card.userId}`"
             class="likes-content-section__card-wrapper"
           >
-            <ProfileCard />
+            <ProfileCard
+              :name="card.name"
+              :old="`${card.old}`"
+              :img="card.img"
+            />
           </div>
         </div>
       </div>
@@ -37,26 +41,14 @@ import Container from '@/components/ui/Container/Container.vue'
 import HorizontalSeparator from '@/views/Likes/components/HorizontalSeparator.vue'
 import ProfileCard from '@/views/Likes/components/ProfileCard.vue'
 import Heading from '@/components/ui/Heading/Heading.vue'
+import likesCards from '../helpers/mock/likesCards'
 
 export default defineComponent({
   name: 'Likes',
   components: { Heading, ProfileCard, HorizontalSeparator, Container },
   setup() {
     const state = reactive({
-      cards: [
-        {
-          title: 'today',
-          count: 3,
-        },
-        {
-          title: 'tomorrow',
-          count: 1,
-        },
-        {
-          title: '29.03',
-          count: 4,
-        },
-      ],
+      sections: likesCards,
     })
 
     return { ...toRefs(state) }

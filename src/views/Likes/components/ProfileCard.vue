@@ -2,10 +2,10 @@
   <div class="profile-card">
     <div class="profile-card__image-wrapper">
       <div class="blackout-layer"></div>
-      <img src="@/assets/images/dg.png" alt="profile image" />
+      <img :src="require(`@/assets/${img}`)" alt="profile image" />
     </div>
     <div class="profile-card-footer">
-      <div class="profile-card-footer__name">Aksimka, 24</div>
+      <div class="profile-card-footer__name">{{ name }}, {{ old }}</div>
       <div class="profile-card-footer__action">
         <SvgIcon name="heart-line" :size="24" />
       </div>
@@ -18,6 +18,20 @@ import SvgIcon from '@/components/SvgIcon'
 export default {
   name: 'ProfileCard',
   components: { SvgIcon },
+  props: {
+    name: {
+      type: String,
+      default: 'No name',
+    },
+    old: {
+      type: String,
+      default: '',
+    },
+    img: {
+      type: String,
+      default: 'images/no-img.jpg',
+    },
+  },
 }
 </script>
 
@@ -42,6 +56,7 @@ export default {
       height: 100%;
       width: 150%;
       position: absolute;
+      object-fit: cover;
     }
   }
   .profile-card-footer {
