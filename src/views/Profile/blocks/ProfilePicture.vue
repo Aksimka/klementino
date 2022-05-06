@@ -9,18 +9,31 @@
         ></span>
       </div>
     </div>
-    <div class="picture-layout__image">
+    <div class="picture-layout__images">
       <div class="blackout-layer"></div>
-      <img src="@/assets/images/dg.png" alt="profile image" />
+      <div class="images-stack">
+        <img
+          v-for="(img, index) in images"
+          :key="index"
+          :src="require(`@/assets/${img}`)"
+          alt="profile image"
+        />
+      </div>
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'ProfilePicture',
+  props: {
+    images: {
+      type: Array as string[],
+      default: () => ['images/no-img.jpg'],
+    },
+  },
 })
 </script>
 
@@ -48,7 +61,7 @@ export default defineComponent({
   .picture-layout__online {
     margin-left: 4px;
   }
-  .picture-layout__image {
+  .picture-layout__images {
     position: relative;
     width: 100%;
     display: flex;

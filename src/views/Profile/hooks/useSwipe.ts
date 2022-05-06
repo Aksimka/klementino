@@ -29,10 +29,12 @@ export default (): useSwipeType => {
     }
     if (dragOffset.value > 100) {
       swipeSide.value = 'right'
-    }
-    if (dragOffset.value < -100) {
+    } else if (dragOffset.value < -100) {
       swipeSide.value = 'left'
+    } else {
+      swipeSide.value = null
     }
+
     currentTouchEvent.value = touch
   }
   // eslint-disable-next-line no-undef
