@@ -8,6 +8,7 @@ type UseSwipeType = {
   currentTouchEvent: Ref<Touch | null>
   swipeSide: Ref<SwipeSides | null>
   stylesByPosition: ComputedRef<Record<'transform', string>>
+  prevStylesByPosition: ComputedRef<Record<'transform', string>>
   swipeHandler(e: TouchEventInit): void
   startSwipe(e: TouchEventInit): void
   endSwipe(): void
@@ -55,12 +56,24 @@ export default (): UseSwipeType => {
     }
   })
 
+  const prevStylesByPosition = computed(() => {
+    const scale = 0.9 + Math.abs(dragOffset.value) / 2000
+    const scaleLimit = scale > 1 ? 1 : scale
+    const opacity = 0.7 + Math.abs(dragOffset.value) / 1000
+
+    return {
+      transform: 'scale(' + scaleLimit + ')',
+      opacity: opacity,
+    }
+  })
+
   return {
     dragOffset,
     initTouchEvent,
     currentTouchEvent,
     swipeSide,
     stylesByPosition,
+    prevStylesByPosition,
     swipeHandler,
     startSwipe,
     endSwipe,

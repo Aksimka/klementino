@@ -4,16 +4,31 @@
     class="profile"
     :class="{ 'fixed-swipe': dragOffset !== 0 }"
   >
-    <div
-      ref="pictureWrapper"
-      v-touch:drag="swipeHandler"
-      class="profile-picture__wrapper"
-      :class="{ smooth: !currentTouchEvent, pan: currentTouchEvent }"
-      :style="stylesByPosition"
-      @touchstart="startSwipe"
-      @touchend="endSwipe"
-    >
-      <ProfilePicture :images="currentProfile.images" :name="combineName" />
+    <div class="profiles-swiper">
+      <div
+        ref="pictureWrapper"
+        v-touch:drag="swipeHandler"
+        class="profiles-swiper__current-profile"
+        :class="{ smooth: !currentTouchEvent, pan: currentTouchEvent }"
+        :style="stylesByPosition"
+        @touchstart="startSwipe"
+        @touchend="endSwipe"
+      >
+        <ProfilePicture
+          :images="currentProfile.images"
+          :name="combineName(currentProfile)"
+        />
+      </div>
+      <div
+        class="profiles-swiper__prev-profiles"
+        :class="{ smooth: !currentTouchEvent }"
+        :style="prevStylesByPosition"
+      >
+        <ProfilePicture
+          :images="profiles[1].images"
+          :name="combineName(profiles[1])"
+        />
+      </div>
     </div>
     <Container class="profile-actions">
       <RoundButton
@@ -56,7 +71,7 @@
       <DescriptionElement class="profile-info__element">
         <template #header>
           <Heading type="2" weight="bold">
-            {{ combineName }}
+            {{ combineName(currentProfile) }}
           </Heading>
         </template>
         <Text weight="bold"> {{ currentProfile.business }} </Text>
@@ -124,13 +139,14 @@ export default defineComponent({
       currentTouchEvent,
       swipeSide,
       stylesByPosition,
+      prevStylesByPosition,
       dragOffset,
       swipeHandler,
       startSwipe,
       endSwipe,
     } = useSwipe()
 
-    const { currentProfile, combineName } = useProfiles()
+    const { currentProfile, combineName, profiles } = useProfiles()
 
     document.addEventListener('scroll', () => {
       state.decreaseButton = window.scrollY > 10
@@ -144,6 +160,7 @@ export default defineComponent({
       sectionWrapper,
       pictureWrapper,
       stylesByPosition,
+      prevStylesByPosition,
       currentTouchEvent,
       swipeSide,
       dragOffset,
@@ -151,6 +168,7 @@ export default defineComponent({
       startSwipe,
       endSwipe,
 
+      profiles,
       currentProfile,
       combineName,
     }
@@ -164,6 +182,20 @@ export default defineComponent({
   margin: 0 auto;
   border-radius: 40px;
   overflow: hidden;
+  .profiles-swiper__current-profile {
+    position: relative;
+    z-index: 2;
+  }
+  .profiles-swiper__prev-profiles {
+    width: calc(100% - 16px);
+    margin: 0 auto;
+    position: absolute;
+    z-index: 1;
+    top: var(--header-heigth);
+    left: 8px;
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
   .prepare-action {
     transform: scale(0.7);
   }
@@ -174,6 +206,7 @@ export default defineComponent({
     position: fixed;
     bottom: calc(8px + var(--nav-heigth));
     width: 100%;
+    z-index: 5;
   }
   .profile-action {
     transition: 0.3s;

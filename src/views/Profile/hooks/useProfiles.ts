@@ -6,7 +6,7 @@ interface useProfilesType {
   profiles: Ref<Profile[]>
   prevProfiles: Ref<Profile[]>
   currentProfile: ComputedRef<Profile>
-  combineName: ComputedRef<string>
+  combineName: (profile: Profile) => string
 }
 
 export default (): useProfilesType => {
@@ -17,9 +17,9 @@ export default (): useProfilesType => {
     return profiles.value[0]
   })
 
-  const combineName = computed(() => {
-    return `${currentProfile.value.name}, ${currentProfile.value.age}`
-  })
+  const combineName = (profile: Profile) => {
+    return `${profile.name}, ${profile.age}`
+  }
 
   return { profiles, prevProfiles, currentProfile, combineName }
 }
