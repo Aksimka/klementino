@@ -1,8 +1,8 @@
 <template>
-  <div class="picture-layout">
+  <div class="picture-layout" v-touch:tap="tapHandler">
     <div class="picture-layout-top">
       <div class="d-flex">
-        <div class="picture-layout__name">Aksimka, 24</div>
+        <div class="picture-layout__name">{{ name }}</div>
         <span
           class="picture-layout__online online-flag"
           :class="{ online: true }"
@@ -12,27 +12,47 @@
     <div class="picture-layout__images">
       <div class="blackout-layer"></div>
       <div class="images-stack">
-        <img
-          v-for="(img, index) in images"
-          :key="index"
-          :src="require(`@/assets/${img}`)"
-          alt="profile image"
-        />
+        <template v-for="(img, index) in images">
+          <img
+            v-if="index === currentImageIndex"
+            :key="index"
+            :src="require(`@/assets/${img}`)"
+            alt="profile image"
+          />
+        </template>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref, toRefs } from 'vue'
 
 export default defineComponent({
   name: 'ProfilePicture',
   props: {
+    name: {
+      type: String,
+      default: 'No name',
+    },
     images: {
-      type: Array as string[],
+      type: Array,
       default: () => ['images/no-img.jpg'],
     },
+  },
+  setup(props) {
+    const { images } = toRefs(props)
+    const currentImageIndex = ref<number>(0)
+
+    const tapHandler = () => {
+      if (currentImageIndex.value >= images.value.length - 1) {
+        currentImageIndex.value = 0
+      } else {
+        currentImageIndex.value += 1
+      }
+    }
+
+    return { currentImageIndex, tapHandler }
   },
 })
 </script>

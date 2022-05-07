@@ -8,12 +8,12 @@
       ref="pictureWrapper"
       v-touch:drag="swipeHandler"
       class="profile-picture__wrapper"
-      :class="{ smooth: !currentTouchEvent }"
+      :class="{ smooth: !currentTouchEvent, pan: currentTouchEvent }"
       :style="stylesByPosition"
       @touchstart="startSwipe"
       @touchend="endSwipe"
     >
-      <ProfilePicture />
+      <ProfilePicture :images="currentProfile.images" :name="combineName" />
     </div>
     <Container class="profile-actions">
       <RoundButton
@@ -55,21 +55,18 @@
     <Container class="profile-info">
       <DescriptionElement class="profile-info__element">
         <template #header>
-          <Heading type="2" weight="bold">Aksimka, 24</Heading>
+          <Heading type="2" weight="bold">
+            {{ combineName }}
+          </Heading>
         </template>
-        <Text weight="bold"> Frontend developer </Text>
+        <Text weight="bold"> {{ currentProfile.business }} </Text>
       </DescriptionElement>
       <DescriptionElement class="profile-info__element">
         <template #header>
           <Heading type="6" weight="800">About</Heading>
         </template>
         <Text weight="bold">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias at
-          blanditiis corporis culpa ea, eius et fugiat minima modi omnis ratione
-          ullam veritatis vitae. Architecto corporis cupiditate debitis deserunt
-          dolor dolorem eum harum laudantium nesciunt officiis reprehenderit
-          saepe, tenetur. Alias aliquam dolor ea eveniet ex explicabo fugit,
-          impedit neque tenetur!
+          {{ currentProfile.about }}
         </Text>
       </DescriptionElement>
       <DescriptionElement class="profile-info__element">
@@ -77,7 +74,11 @@
           <Heading type="6" weight="bold">Interests</Heading>
         </template>
         <ChipsGroup>
-          <Chip v-for="i in chips" :key="i" class="profile-info__chip">
+          <Chip
+            v-for="i in currentProfile.interests"
+            :key="i"
+            class="profile-info__chip"
+          >
             {{ i }}
           </Chip>
         </ChipsGroup>
@@ -98,6 +99,7 @@ import ChipsGroup from '@/components/ui/ChipsGroup/ChipsGroup.vue'
 import RoundButton from '@/components/ui/RoundButton/RoundButton.vue'
 import SvgIcon from '@/components/SvgIcon.vue'
 import useSwipe from '../hooks/useSwipe'
+import useProfiles from '../hooks/useProfiles'
 
 export default defineComponent({
   name: 'Main',
@@ -116,16 +118,6 @@ export default defineComponent({
     const state = reactive({
       inputValue: null,
       decreaseButton: false,
-      chips: [
-        'qweqwe',
-        'qwe',
-        'qweqfdsav',
-        'qwdcqw',
-        'qwfqw',
-        'svasvas',
-        'vbngbdsbfb',
-        'ascvd',
-      ],
     })
 
     const {
@@ -137,6 +129,8 @@ export default defineComponent({
       startSwipe,
       endSwipe,
     } = useSwipe()
+
+    const { currentProfile, combineName } = useProfiles()
 
     document.addEventListener('scroll', () => {
       state.decreaseButton = window.scrollY > 10
@@ -156,6 +150,9 @@ export default defineComponent({
       swipeHandler,
       startSwipe,
       endSwipe,
+
+      currentProfile,
+      combineName,
     }
   },
 })

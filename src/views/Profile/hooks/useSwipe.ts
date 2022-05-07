@@ -2,7 +2,7 @@ import { computed, Ref, ComputedRef, ref } from 'vue'
 
 type SwipeSides = 'left' | 'right'
 
-type useSwipeType = {
+type UseSwipeType = {
   dragOffset: Ref<number>
   initTouchEvent: Ref<Touch | null>
   currentTouchEvent: Ref<Touch | null>
@@ -13,14 +13,14 @@ type useSwipeType = {
   endSwipe(): void
 }
 
-export default (): useSwipeType => {
+export default (): UseSwipeType => {
   const dragOffset = ref<number>(0)
   const initTouchEvent = ref<Touch | null>(null)
   const currentTouchEvent = ref<Touch | null>(null)
   const swipeSide = ref<SwipeSides | null>(null)
 
-  // eslint-disable-next-line no-undef
   const swipeHandler = (e: TouchEventInit) => {
+    if (window.pageYOffset >= 10) return
     const touch = e.touches?.[0]
     if (!touch) return
     if (currentTouchEvent.value) {
@@ -37,13 +37,11 @@ export default (): useSwipeType => {
 
     currentTouchEvent.value = touch
   }
-  // eslint-disable-next-line no-undef
   const startSwipe = (e: TouchEventInit) => {
     const touch = e.touches?.[0]
     if (!touch) return
     initTouchEvent.value = touch
   }
-  // eslint-disable-next-line no-undef
   const endSwipe = () => {
     dragOffset.value = 0
     swipeSide.value = null

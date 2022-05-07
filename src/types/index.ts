@@ -1,6 +1,6 @@
 export type NumString = number | string
 
-interface Profile {
+export interface Profile {
   userId: number
   name: string
   age: number
