@@ -12,10 +12,9 @@
     <div class="picture-layout__images">
       <div class="blackout-layer"></div>
       <div class="images-stack">
-        <template v-for="(img, index) in images">
+        <template v-for="(img, index) in images" :key="index">
           <img
-            v-if="index === currentImageIndex"
-            :key="index"
+            v-show="index === currentImageIndex"
             :src="require(`@/assets/${img}`)"
             alt="profile image"
           />
@@ -26,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, toRefs } from 'vue'
+import { defineComponent, ref, toRefs, watch } from 'vue'
 
 export default defineComponent({
   name: 'ProfilePicture',
@@ -43,6 +42,10 @@ export default defineComponent({
   setup(props) {
     const { images } = toRefs(props)
     const currentImageIndex = ref<number>(0)
+
+    watch(images, () => {
+      currentImageIndex.value = 0
+    })
 
     const tapHandler = () => {
       if (currentImageIndex.value >= images.value.length - 1) {

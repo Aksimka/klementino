@@ -1,12 +1,13 @@
 import { computed, Ref, ComputedRef, ref } from 'vue'
 
-type SwipeSides = 'left' | 'right'
+export type SwipeSides = 'left' | 'right'
 
 type UseSwipeType = {
   dragOffset: Ref<number>
   initTouchEvent: Ref<Touch | null>
   currentTouchEvent: Ref<Touch | null>
   swipeSide: Ref<SwipeSides | null>
+  isSwipeEnds: Ref<boolean>
   stylesByPosition: ComputedRef<Record<'transform', string>>
   prevStylesByPosition: ComputedRef<Record<'transform', string>>
   swipeHandler(e: TouchEventInit): void
@@ -19,6 +20,7 @@ export default (): UseSwipeType => {
   const initTouchEvent = ref<Touch | null>(null)
   const currentTouchEvent = ref<Touch | null>(null)
   const swipeSide = ref<SwipeSides | null>(null)
+  const isSwipeEnds = ref<boolean>(false)
 
   const swipeHandler = (e: TouchEventInit) => {
     if (window.pageYOffset >= 10) return
@@ -44,9 +46,23 @@ export default (): UseSwipeType => {
     initTouchEvent.value = touch
   }
   const endSwipe = () => {
-    dragOffset.value = 0
-    swipeSide.value = null
     currentTouchEvent.value = null
+    isSwipeEnds.value = true
+    switch (swipeSide.value) {
+      case 'left':
+        dragOffset.value = -400
+        break
+      case 'right':
+        dragOffset.value = 400
+        break
+      default:
+        dragOffset.value = 0
+    }
+    swipeSide.value = null
+    setTimeout(() => {
+      isSwipeEnds.value = false
+      dragOffset.value = 0
+    }, 200)
   }
 
   const stylesByPosition = computed(() => {
@@ -72,6 +88,7 @@ export default (): UseSwipeType => {
     initTouchEvent,
     currentTouchEvent,
     swipeSide,
+    isSwipeEnds,
     stylesByPosition,
     prevStylesByPosition,
     swipeHandler,

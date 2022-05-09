@@ -1,18 +1,16 @@
 <template>
-  <div
-    ref="sectionWrapper"
-    class="profile"
-    :class="{ 'fixed-swipe': dragOffset !== 0 }"
-  >
+  <div class="profile" :class="{ 'fixed-swipe': dragOffset !== 0 }">
     <div class="profiles-swiper">
       <div
-        ref="pictureWrapper"
         v-touch:drag="swipeHandler"
         class="profiles-swiper__current-profile swiper-size-limit"
-        :class="{ smooth: !currentTouchEvent, pan: currentTouchEvent }"
+        :class="{
+          smooth: !currentTouchEvent && isSwipeEnds,
+          pan: currentTouchEvent,
+        }"
         :style="stylesByPosition"
         @touchstart="startSwipe"
-        @touchend="endSwipe"
+        @touchend="endSwipeChoice(swipeSide)"
       >
         <ProfilePicture
           :images="currentProfile.images"
@@ -20,7 +18,8 @@
         />
       </div>
       <div
-        class="profiles-swiper__prev-profiles"
+        v-if="profiles[1]"
+        class="profiles-swiper__next-profiles"
         :class="{ smooth: !currentTouchEvent }"
         :style="prevStylesByPosition"
       >
@@ -39,6 +38,7 @@
           `${swipeSide === 'left' ? 'background_dislike' : 'background_main'}`,
           { active: swipeSide === 'left' },
         ]"
+        @click="makeChoice('dislike')"
       >
         <SvgIcon
           class="profile-action__icon color_dislike"
@@ -60,6 +60,7 @@
           `${swipeSide === 'right' ? 'background_like' : 'background_main'}`,
           { active: swipeSide === 'right' },
         ]"
+        @click="makeChoice('like')"
       >
         <SvgIcon
           class="picture-action__icon color_like"
@@ -105,7 +106,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, ref } from 'vue'
+import { defineComponent, reactive, toRefs } from 'vue'
 import ProfilePicture from '@/views/Profile/blocks/ProfilePicture.vue'
 import Text from '@/components/ui/Text/Text.vue'
 import Container from '@/components/ui/Container/Container.vue'
@@ -115,8 +116,10 @@ import Chip from '@/components/ui/Chip/Chip.vue'
 import ChipsGroup from '@/components/ui/ChipsGroup/ChipsGroup.vue'
 import RoundButton from '@/components/ui/RoundButton/RoundButton.vue'
 import SvgIcon from '@/components/SvgIcon.vue'
-import useSwipe from '../hooks/useSwipe'
+import useSwipe, { SwipeSides } from '../hooks/useSwipe'
 import useProfiles from '../hooks/useProfiles'
+
+type Choices = 'like' | 'dislike'
 
 export default defineComponent({
   name: 'Main',
@@ -132,11 +135,6 @@ export default defineComponent({
     ProfilePicture,
   },
   setup() {
-    const state = reactive({
-      inputValue: null,
-      decreaseButton: false,
-    })
-
     const {
       currentTouchEvent,
       swipeSide,
@@ -145,26 +143,65 @@ export default defineComponent({
       dragOffset,
       swipeHandler,
       startSwipe,
+      isSwipeEnds,
       endSwipe,
     } = useSwipe()
 
-    const { currentProfile, combineName, profiles } = useProfiles()
+    const {
+      currentProfile,
+      currentProfileIndex,
+      combineName,
+      profiles,
+      likeCurrentProfile,
+      dislikeCurrentProfile,
+    } = useProfiles()
+
+    const state = reactive({
+      inputValue: null,
+      decreaseButton: false,
+    })
 
     document.addEventListener('scroll', () => {
       state.decreaseButton = window.scrollY > 10
     })
 
-    const sectionWrapper = ref<HTMLDivElement | null>(null)
-    const pictureWrapper = ref<HTMLDivElement | null>(null)
+    const makeChoice = (choice: Choices | undefined) => {
+      switch (choice) {
+        case 'like':
+          likeCurrentProfile()
+          break
+        case 'dislike':
+          dislikeCurrentProfile()
+          break
+        default:
+          return
+      }
+    }
+
+    const sideToActionAdapter = (side: SwipeSides) => {
+      switch (side) {
+        case 'left':
+          return 'dislike'
+        case 'right':
+          return 'like'
+        default:
+          return
+      }
+    }
+
+    const endSwipeChoice = (side: SwipeSides) => {
+      const adapt = sideToActionAdapter(side)
+      makeChoice(adapt)
+      endSwipe()
+    }
 
     return {
       ...toRefs(state),
-      sectionWrapper,
-      pictureWrapper,
       stylesByPosition,
       prevStylesByPosition,
       currentTouchEvent,
       swipeSide,
+      isSwipeEnds,
       dragOffset,
       swipeHandler,
       startSwipe,
@@ -172,7 +209,11 @@ export default defineComponent({
 
       profiles,
       currentProfile,
+      currentProfileIndex,
       combineName,
+
+      makeChoice,
+      endSwipeChoice,
     }
   },
 })
@@ -188,8 +229,8 @@ export default defineComponent({
     position: relative;
     z-index: 2;
   }
-  .profiles-swiper__prev-profiles {
-    width: 100%;
+  .profiles-swiper__next-profiles {
+    max-width: calc(100% - 16px);
     margin: 0 auto;
     position: absolute;
     z-index: 1;
