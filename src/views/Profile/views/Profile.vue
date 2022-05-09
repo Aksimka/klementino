@@ -8,7 +8,7 @@
       <div
         ref="pictureWrapper"
         v-touch:drag="swipeHandler"
-        class="profiles-swiper__current-profile"
+        class="profiles-swiper__current-profile swiper-size-limit"
         :class="{ smooth: !currentTouchEvent, pan: currentTouchEvent }"
         :style="stylesByPosition"
         @touchstart="startSwipe"
@@ -24,10 +24,12 @@
         :class="{ smooth: !currentTouchEvent }"
         :style="prevStylesByPosition"
       >
-        <ProfilePicture
-          :images="profiles[1].images"
-          :name="combineName(profiles[1])"
-        />
+        <div class="swiper-size-limit">
+          <ProfilePicture
+            :images="profiles[1].images"
+            :name="combineName(profiles[1])"
+          />
+        </div>
       </div>
     </div>
     <Container class="profile-actions">
@@ -187,7 +189,7 @@ export default defineComponent({
     z-index: 2;
   }
   .profiles-swiper__prev-profiles {
-    width: calc(100% - 16px);
+    width: 100%;
     margin: 0 auto;
     position: absolute;
     z-index: 1;
@@ -195,6 +197,10 @@ export default defineComponent({
     left: 8px;
     transform: scale(0.9);
     opacity: 0.7;
+  }
+  .swiper-size-limit {
+    max-width: 575px;
+    margin: 0 auto;
   }
   .prepare-action {
     transform: scale(0.7);
