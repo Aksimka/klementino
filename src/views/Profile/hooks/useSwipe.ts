@@ -1,4 +1,4 @@
-import { computed, Ref, ComputedRef, ref } from 'vue'
+import { computed, Ref, ComputedRef, ref, reactive } from 'vue'
 
 export type SwipeSides = 'left' | 'right'
 
@@ -7,9 +7,13 @@ type UseSwipeType = {
   initTouchEvent: Ref<Touch | null>
   currentTouchEvent: Ref<Touch | null>
   swipeSide: Ref<SwipeSides | null>
-  isSwipeEnds: Ref<boolean>
   stylesByPosition: ComputedRef<Record<'transform', string>>
   prevStylesByPosition: ComputedRef<Record<'transform', string>>
+  swipeStates: {
+    isStart: boolean
+    isSwiping: boolean
+    isEnds: boolean
+  }
   swipeHandler(e: TouchEventInit): void
   startSwipe(e: TouchEventInit): void
   endSwipe(): void
@@ -20,12 +24,23 @@ export default (): UseSwipeType => {
   const initTouchEvent = ref<Touch | null>(null)
   const currentTouchEvent = ref<Touch | null>(null)
   const swipeSide = ref<SwipeSides | null>(null)
-  const isSwipeEnds = ref<boolean>(false)
+  const swipeStates = reactive({
+    isStart: false,
+    isSwiping: false,
+    isEnds: false,
+  })
 
   const swipeHandler = (e: TouchEventInit) => {
-    if (window.pageYOffset >= 10) return
+    swipeStates.isStart = false
+    swipeStates.isSwiping = true
     const touch = e.touches?.[0]
-    if (!touch) return
+    if (window.pageYOffset >= 30) {
+      endSwipe()
+      return
+    }
+    if (!touch) {
+      return
+    }
     if (currentTouchEvent.value) {
       dragOffset.value =
         dragOffset.value - (currentTouchEvent.value.clientX - touch.clientX)
@@ -41,13 +56,16 @@ export default (): UseSwipeType => {
     currentTouchEvent.value = touch
   }
   const startSwipe = (e: TouchEventInit) => {
+    swipeStates.isStart = true
+    swipeStates.isSwiping = true
     const touch = e.touches?.[0]
     if (!touch) return
     initTouchEvent.value = touch
   }
   const endSwipe = () => {
+    swipeStates.isEnds = true
+    swipeStates.isSwiping = false
     currentTouchEvent.value = null
-    isSwipeEnds.value = true
     switch (swipeSide.value) {
       case 'left':
         dragOffset.value = -400
@@ -60,7 +78,7 @@ export default (): UseSwipeType => {
     }
     swipeSide.value = null
     setTimeout(() => {
-      isSwipeEnds.value = false
+      swipeStates.isEnds = false
       dragOffset.value = 0
     }, 200)
   }
@@ -88,9 +106,9 @@ export default (): UseSwipeType => {
     initTouchEvent,
     currentTouchEvent,
     swipeSide,
-    isSwipeEnds,
     stylesByPosition,
     prevStylesByPosition,
+    swipeStates,
     swipeHandler,
     startSwipe,
     endSwipe,

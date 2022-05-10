@@ -5,8 +5,8 @@
         v-touch:drag="swipeHandler"
         class="profiles-swiper__current-profile swiper-size-limit"
         :class="{
-          smooth: !currentTouchEvent && isSwipeEnds,
-          pan: currentTouchEvent,
+          smooth: !swipeStates.isSwiping && swipeStates.isEnds,
+          pan: swipeStates.isSwiping,
         }"
         :style="stylesByPosition"
         @touchstart="startSwipe"
@@ -18,15 +18,15 @@
         />
       </div>
       <div
-        v-if="profiles[1]"
+        v-if="nextProfileBySwipeState"
         class="profiles-swiper__next-profiles"
-        :class="{ smooth: !currentTouchEvent }"
+        :class="{ smooth: !swipeStates.isSwiping }"
         :style="prevStylesByPosition"
       >
         <div class="swiper-size-limit">
           <ProfilePicture
-            :images="profiles[1].images"
-            :name="combineName(profiles[1])"
+            :images="nextProfileBySwipeState.images"
+            :name="combineName(nextProfileBySwipeState)"
           />
         </div>
       </div>
@@ -106,7 +106,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue'
+import { computed, defineComponent, reactive, toRefs } from 'vue'
 import ProfilePicture from '@/views/Profile/blocks/ProfilePicture.vue'
 import Text from '@/components/ui/Text/Text.vue'
 import Container from '@/components/ui/Container/Container.vue'
@@ -143,7 +143,7 @@ export default defineComponent({
       dragOffset,
       swipeHandler,
       startSwipe,
-      isSwipeEnds,
+      swipeStates,
       endSwipe,
     } = useSwipe()
 
@@ -155,6 +155,10 @@ export default defineComponent({
       likeCurrentProfile,
       dislikeCurrentProfile,
     } = useProfiles()
+
+    const nextProfileBySwipeState = computed(() => {
+      return profiles.value[swipeStates.isEnds ? 0 : 1]
+    })
 
     const state = reactive({
       inputValue: null,
@@ -201,7 +205,7 @@ export default defineComponent({
       prevStylesByPosition,
       currentTouchEvent,
       swipeSide,
-      isSwipeEnds,
+      swipeStates,
       dragOffset,
       swipeHandler,
       startSwipe,
@@ -214,6 +218,8 @@ export default defineComponent({
 
       makeChoice,
       endSwipeChoice,
+
+      nextProfileBySwipeState,
     }
   },
 })
@@ -223,8 +229,6 @@ export default defineComponent({
 .profile {
   width: calc(100% - 16px);
   margin: 0 auto;
-  border-radius: 40px;
-  overflow: hidden;
   .profiles-swiper__current-profile {
     position: relative;
     z-index: 2;

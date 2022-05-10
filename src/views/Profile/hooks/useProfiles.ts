@@ -10,7 +10,7 @@ interface useProfilesType {
   combineName: (profile: Profile) => string
   likeCurrentProfile: () => void
   dislikeCurrentProfile: () => void
-  nextProfile: () => void
+  goNextProfile: () => void
 }
 
 export default (): useProfilesType => {
@@ -22,7 +22,7 @@ export default (): useProfilesType => {
     return profiles.value[currentProfileIndex.value]
   })
 
-  const nextProfile = () => {
+  const goNextProfile = () => {
     const profile = profiles.value.splice(0, 1)
     console.log(profile, profiles, 'profiles')
     if (profile?.length) {
@@ -36,12 +36,12 @@ export default (): useProfilesType => {
 
   const likeCurrentProfile = () => {
     console.log('like')
-    nextProfile()
+    goNextProfile()
   }
 
   const dislikeCurrentProfile = () => {
     console.log('dislike')
-    nextProfile()
+    goNextProfile()
   }
 
   return {
@@ -49,7 +49,7 @@ export default (): useProfilesType => {
     prevProfiles,
     currentProfileIndex,
     currentProfile,
-    nextProfile,
+    goNextProfile,
     combineName,
     likeCurrentProfile,
     dislikeCurrentProfile,
