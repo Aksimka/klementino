@@ -2,6 +2,10 @@ import { computed, Ref, ComputedRef, ref, reactive } from 'vue'
 
 export type SwipeSides = 'left' | 'right'
 
+type CallbackPayload = {
+  leaveCallback: () => void
+}
+
 type UseSwipeType = {
   dragOffset: Ref<number>
   initTouchEvent: Ref<Touch | null>
@@ -16,7 +20,7 @@ type UseSwipeType = {
   }
   swipeHandler(e: TouchEventInit): void
   startSwipe(e: TouchEventInit): void
-  endSwipe(): void
+  endSwipe(payload?: CallbackPayload): void
 }
 
 export default (): UseSwipeType => {
@@ -62,7 +66,8 @@ export default (): UseSwipeType => {
     if (!touch) return
     initTouchEvent.value = touch
   }
-  const endSwipe = () => {
+  const endSwipe = (payload?: CallbackPayload) => {
+    const leaveCallback = payload?.leaveCallback
     swipeStates.isEnds = true
     swipeStates.isSwiping = false
     currentTouchEvent.value = null
@@ -80,6 +85,7 @@ export default (): UseSwipeType => {
     setTimeout(() => {
       swipeStates.isEnds = false
       dragOffset.value = 0
+      leaveCallback && leaveCallback()
     }, 200)
   }
 

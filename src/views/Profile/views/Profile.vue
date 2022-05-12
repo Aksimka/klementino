@@ -157,7 +157,7 @@ export default defineComponent({
     } = useProfiles()
 
     const nextProfileBySwipeState = computed(() => {
-      return profiles.value[swipeStates.isEnds ? 0 : 1]
+      return profiles.value[1]
     })
 
     const state = reactive({
@@ -194,9 +194,11 @@ export default defineComponent({
     }
 
     const endSwipeChoice = (side: SwipeSides) => {
-      const adapt = sideToActionAdapter(side)
-      makeChoice(adapt)
-      endSwipe()
+      const onLeaveEnd = () => {
+        const adapt = sideToActionAdapter(side)
+        makeChoice(adapt)
+      }
+      endSwipe({ leaveCallback: onLeaveEnd })
     }
 
     return {
@@ -227,8 +229,8 @@ export default defineComponent({
 
 <style lang="scss">
 .profile {
-  width: calc(100% - 16px);
-  margin: 0 auto;
+  padding: 0 8px;
+  overflow-x: hidden;
   .profiles-swiper__current-profile {
     position: relative;
     z-index: 2;

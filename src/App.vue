@@ -40,6 +40,5 @@ export default defineComponent({
   height: calc(100vh - var(--nav-heigth) - var(--header-heigth));
   margin-top: var(--header-heigth);
   touch-action: pan-y;
-  overflow-x: hidden;
 }
 </style>
