@@ -3,7 +3,7 @@ export type NumString = number | string
 export interface Profile {
   userId: number
   name: string
-  age: number
+  birthDate: string
   isOnline: boolean
   business: string
   about: string

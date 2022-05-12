@@ -1,6 +1,6 @@
 import { computed, ComputedRef, Ref, ref } from 'vue'
 import { Profile } from '@/types'
-import profilesMock from '../helpers/mock/profiles'
+import profilesMock from '@/mocks/profiles'
 import useProfile from '@/hooks/useProfile'
 
 interface useProfilesType {
@@ -34,7 +34,11 @@ export default (): useProfilesType => {
   }
 
   const combineName = (profile: Profile) => {
-    return `${profile.name}, ${profile.age}`
+    const nowYear = new Date().getFullYear()
+    const userBirthYear = new Date(profile.birthDate).getFullYear()
+    const computeAge = nowYear - userBirthYear
+
+    return `${profile.name}, ${computeAge}`
   }
 
   const likeCurrentProfile = () => {
