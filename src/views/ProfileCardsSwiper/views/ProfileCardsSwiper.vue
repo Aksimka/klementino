@@ -117,7 +117,7 @@ import ChipsGroup from '@/components/ui/ChipsGroup/ChipsGroup.vue'
 import RoundButton from '@/components/ui/RoundButton/RoundButton.vue'
 import SvgIcon from '@/components/SvgIcon.vue'
 import useSwipe, { SwipeSides } from '../hooks/useSwipe'
-import useProfiles from '../hooks/useProfiles'
+import useProfileCards from '../hooks/useProfileCards'
 
 type Choices = 'like' | 'dislike'
 
@@ -154,7 +154,7 @@ export default defineComponent({
       profiles,
       likeCurrentProfile,
       dislikeCurrentProfile,
-    } = useProfiles()
+    } = useProfileCards()
 
     const nextProfileBySwipeState = computed(() => {
       return profiles.value[1]

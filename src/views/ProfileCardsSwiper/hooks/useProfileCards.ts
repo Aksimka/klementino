@@ -1,6 +1,6 @@
 import { computed, ComputedRef, Ref, ref } from 'vue'
 import { Profile } from '@/types'
-import profilesMock from '@/mocks/profiles'
+import profileCardsMock from './../helpers/mock/profileCards'
 import useProfile from '@/hooks/useProfile'
 
 interface useProfilesType {
@@ -17,7 +17,7 @@ interface useProfilesType {
 export default (): useProfilesType => {
   const { likeProfile, dislikeProfile } = useProfile()
 
-  const profiles = ref<Profile[]>(profilesMock)
+  const profiles = ref<Profile[]>(profileCardsMock)
   const prevProfiles = ref<Profile[]>([])
   const currentProfileIndex = ref<number>(0)
 
