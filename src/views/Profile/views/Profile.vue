@@ -1,48 +1,18 @@
 <template>
-  <div class="profile" :class="{ 'fixed-swipe': dragOffset !== 0 }">
-    <div class="profiles-swiper">
-      <div
-        v-touch:drag="swipeHandler"
-        class="profiles-swiper__current-profile swiper-size-limit"
-        :class="{
-          smooth: !swipeStates.isSwiping && swipeStates.isEnds,
-          pan: swipeStates.isSwiping,
-        }"
-        :style="stylesByPosition"
-        @touchstart="startSwipe"
-        @touchend="endSwipeChoice(swipeSide)"
-      >
-        <ProfilePicture
-          :images="currentProfile.images"
-          :name="combineName(currentProfile)"
-        />
-      </div>
-      <div
-        v-if="nextProfileBySwipeState"
-        class="profiles-swiper__next-profiles"
-        :class="{ smooth: !swipeStates.isSwiping }"
-        :style="prevStylesByPosition"
-      >
-        <div class="swiper-size-limit">
-          <ProfilePicture
-            :images="nextProfileBySwipeState.images"
-            :name="combineName(nextProfileBySwipeState)"
-          />
-        </div>
-      </div>
+  <div ref="sectionWrapper" class="profile">
+    <div ref="pictureWrapper" class="profile-picture__wrapper">
+      <ProfilePicture />
     </div>
-    <Container class="profile-actions">
+    <Container
+      v-if="currentUserid !== profileInfo.userId"
+      class="profile-actions"
+    >
       <RoundButton
         class="button-dislike profile-action"
-        :class="[
-          `${swipeSide === 'left' ? 'background_dislike' : 'background_main'}`,
-          { active: swipeSide === 'left' },
-        ]"
-        @click="makeChoice('dislike')"
+        @click="dislikeProfile"
       >
         <SvgIcon
           class="profile-action__icon color_dislike"
-          :class="{ color_main: swipeSide === 'left' }"
           name="cross"
           :size="decreaseButton ? 22 : 34"
         />
@@ -54,14 +24,7 @@
           name="star"
         />
       </RoundButton>
-      <RoundButton
-        class="button-like profile-action"
-        :class="[
-          `${swipeSide === 'right' ? 'background_like' : 'background_main'}`,
-          { active: swipeSide === 'right' },
-        ]"
-        @click="makeChoice('like')"
-      >
+      <RoundButton class="button-like profile-action" @click="likeProfile">
         <SvgIcon
           class="picture-action__icon color_like"
           :class="{ color_main: swipeSide === 'right' }"
@@ -73,18 +36,21 @@
     <Container class="profile-info">
       <DescriptionElement class="profile-info__element">
         <template #header>
-          <Heading type="2" weight="bold">
-            {{ combineName(currentProfile) }}
-          </Heading>
+          <Heading type="2" weight="bold">Aksimka, 24</Heading>
         </template>
-        <Text weight="bold"> {{ currentProfile.business }} </Text>
+        <Text weight="bold"> Frontend developer </Text>
       </DescriptionElement>
       <DescriptionElement class="profile-info__element">
         <template #header>
           <Heading type="6" weight="800">About</Heading>
         </template>
         <Text weight="bold">
-          {{ currentProfile.about }}
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias at
+          blanditiis corporis culpa ea, eius et fugiat minima modi omnis ratione
+          ullam veritatis vitae. Architecto corporis cupiditate debitis deserunt
+          dolor dolorem eum harum laudantium nesciunt officiis reprehenderit
+          saepe, tenetur. Alias aliquam dolor ea eveniet ex explicabo fugit,
+          impedit neque tenetur!
         </Text>
       </DescriptionElement>
       <DescriptionElement class="profile-info__element">
@@ -92,11 +58,7 @@
           <Heading type="6" weight="bold">Interests</Heading>
         </template>
         <ChipsGroup>
-          <Chip
-            v-for="i in currentProfile.interests"
-            :key="i"
-            class="profile-info__chip"
-          >
+          <Chip v-for="i in chips" :key="i" class="profile-info__chip">
             {{ i }}
           </Chip>
         </ChipsGroup>
@@ -106,26 +68,24 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, toRefs } from 'vue'
-import ProfilePicture from '@/views/Profile/blocks/ProfilePicture.vue'
+import { defineComponent, reactive, toRefs, ref } from 'vue'
+import { useUserStore } from '@/store/modules/user'
+import { storeToRefs } from 'pinia'
+import ProfilePicture from './../blocks/ProfilePicture.vue'
 import Text from '@/components/ui/Text/Text.vue'
 import Container from '@/components/ui/Container/Container.vue'
 import Heading from '@/components/ui/Heading/Heading.vue'
-import DescriptionElement from '@/views/Profile/components/DescriptionElement.vue'
+import DescriptionElement from '@/views/ProfileCardsSwiper/components/DescriptionElement.vue'
 import Chip from '@/components/ui/Chip/Chip.vue'
 import ChipsGroup from '@/components/ui/ChipsGroup/ChipsGroup.vue'
 import RoundButton from '@/components/ui/RoundButton/RoundButton.vue'
 import SvgIcon from '@/components/SvgIcon.vue'
-import useSwipe, { SwipeSides } from '../hooks/useSwipe'
-import useProfiles from '../hooks/useProfiles'
-
-type Choices = 'like' | 'dislike'
+import useProfile from '@/hooks/useProfile'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'Main',
   components: {
-    SvgIcon,
-    RoundButton,
     ChipsGroup,
     Chip,
     DescriptionElement,
@@ -133,95 +93,52 @@ export default defineComponent({
     Container,
     Text,
     ProfilePicture,
+    RoundButton,
+    SvgIcon,
   },
   setup() {
-    const {
-      currentTouchEvent,
-      swipeSide,
-      stylesByPosition,
-      prevStylesByPosition,
-      dragOffset,
-      swipeHandler,
-      startSwipe,
-      swipeStates,
-      endSwipe,
-    } = useSwipe()
+    const userStore = useUserStore()
+    const { profileInfo } = storeToRefs(userStore)
 
-    const {
-      currentProfile,
-      currentProfileIndex,
-      combineName,
-      profiles,
-      likeCurrentProfile,
-      dislikeCurrentProfile,
-    } = useProfiles()
+    const router = useRouter()
+    const currentUserid = Number(router?.currentRoute.value.params.id)
 
-    const nextProfileBySwipeState = computed(() => {
-      return profiles.value[1]
-    })
+    console.log(profileInfo, 'profileInfo')
 
     const state = reactive({
       inputValue: null,
       decreaseButton: false,
+      chips: [
+        'qweqwe',
+        'qwe',
+        'qweqfdsav',
+        'qwdcqw',
+        'qwfqw',
+        'svasvas',
+        'vbngbdsbfb',
+        'ascvd',
+      ],
     })
+
+    const { likeProfile, dislikeProfile } = useProfile()
 
     document.addEventListener('scroll', () => {
       state.decreaseButton = window.scrollY > 10
     })
 
-    const makeChoice = (choice: Choices | undefined) => {
-      switch (choice) {
-        case 'like':
-          likeCurrentProfile()
-          break
-        case 'dislike':
-          dislikeCurrentProfile()
-          break
-        default:
-          return
-      }
-    }
+    const sectionWrapper = ref<HTMLDivElement | null>(null)
+    const pictureWrapper = ref<HTMLDivElement | null>(null)
 
-    const sideToActionAdapter = (side: SwipeSides) => {
-      switch (side) {
-        case 'left':
-          return 'dislike'
-        case 'right':
-          return 'like'
-        default:
-          return
-      }
-    }
-
-    const endSwipeChoice = (side: SwipeSides) => {
-      const onLeaveEnd = () => {
-        const adaptAction = sideToActionAdapter(side)
-        makeChoice(adaptAction)
-      }
-      endSwipe({ leaveCallback: onLeaveEnd })
-    }
+    console.log(state, 'state')
 
     return {
       ...toRefs(state),
-      stylesByPosition,
-      prevStylesByPosition,
-      currentTouchEvent,
-      swipeSide,
-      swipeStates,
-      dragOffset,
-      swipeHandler,
-      startSwipe,
-      endSwipe,
-
-      profiles,
-      currentProfile,
-      currentProfileIndex,
-      combineName,
-
-      makeChoice,
-      endSwipeChoice,
-
-      nextProfileBySwipeState,
+      sectionWrapper,
+      pictureWrapper,
+      currentUserid,
+      profileInfo,
+      likeProfile,
+      dislikeProfile,
     }
   },
 })
@@ -229,29 +146,9 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .profile {
-  padding: 0 8px;
-  overflow-x: hidden;
-  .profiles-swiper__current-profile {
-    position: relative;
-    z-index: 2;
-  }
-  .profiles-swiper__next-profiles {
-    max-width: calc(100% - 16px);
-    margin: 0 auto;
-    position: absolute;
-    z-index: 1;
-    top: var(--header-heigth);
-    left: 8px;
-    transform: scale(0.9);
-    opacity: 0.7;
-  }
-  .swiper-size-limit {
-    max-width: 575px;
-    margin: 0 auto;
-  }
-  .prepare-action {
-    transform: scale(0.7);
-  }
+  width: calc(100% - 16px);
+  margin: 0 auto;
+  border-radius: 40px;
   .profile-actions {
     display: flex;
     justify-content: space-around;
@@ -259,13 +156,9 @@ export default defineComponent({
     position: fixed;
     bottom: calc(8px + var(--nav-heigth));
     width: 100%;
-    z-index: 5;
-  }
-  .profile-action {
-    transition: 0.3s;
-  }
-  .profile-action.active {
-    transform: scale(1.2);
+    .profile-action {
+      background-color: var(--color-background-main);
+    }
   }
   .profile-info {
     height: 1500px;
@@ -279,12 +172,5 @@ export default defineComponent({
       margin: 8px 0 0 8px;
     }
   }
-}
-.fixed-swipe {
-  touch-action: pan-x;
-}
-.smooth {
-  transition: 0.3s;
-  transition-timing-function: ease-out;
 }
 </style>

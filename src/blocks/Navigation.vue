@@ -9,7 +9,7 @@
     <router-link class="navigation-item" to="/chats">
       <SvgIcon class="picture-action__icon" name="chats" :size="34" />
     </router-link>
-    <router-link class="navigation-item" :to="`/userInfo/${profileInfo.userId}`">
+    <router-link class="navigation-item" :to="`/profile/${profileInfo.userId}`">
       <SvgIcon class="picture-action__icon" :size="34" name="user-circle" />
     </router-link>
   </nav>

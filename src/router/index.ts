@@ -1,14 +1,14 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import ProfileCardsSwiper from '@/views/ProfileCardsSwiper/views/ProfileCardsSwiper.vue'
 import Profile from '@/views/Profile/views/Profile.vue'
 import Likes from '@/views/Likes/views/Likes.vue'
 import Chats from '@/views/Chats/views/Chats.vue'
-import UserInfo from '@/views/UserInfo/views/UserInfo.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'Profile',
-    component: Profile,
+    name: 'ProfileCardsSwiper',
+    component: ProfileCardsSwiper,
   },
   {
     path: '/likes',
@@ -21,9 +21,9 @@ const routes: Array<RouteRecordRaw> = [
     component: Chats,
   },
   {
-    path: '/userInfo/:id',
-    name: 'UserInfo',
-    component: UserInfo,
+    path: '/profile/:id',
+    name: 'Profile',
+    component: Profile,
   },
 ]
 
