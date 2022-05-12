@@ -21,7 +21,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Chats,
   },
   {
-    path: '/userInfo',
+    path: '/userInfo/:id',
     name: 'UserInfo',
     component: UserInfo,
   },

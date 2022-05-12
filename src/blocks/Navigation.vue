@@ -9,7 +9,7 @@
     <router-link class="navigation-item" to="/chats">
       <SvgIcon class="picture-action__icon" name="chats" :size="34" />
     </router-link>
-    <router-link class="navigation-item" to="/userInfo">
+    <router-link class="navigation-item" :to="`/userInfo/${profileInfo.userId}`">
       <SvgIcon class="picture-action__icon" :size="34" name="user-circle" />
     </router-link>
   </nav>
@@ -17,11 +17,19 @@
 
 <script>
 import { defineComponent } from 'vue'
+import { useUserStore } from '@/store/modules/user'
+import { storeToRefs } from 'pinia'
 import SvgIcon from '@/components/SvgIcon'
 
 export default defineComponent({
   name: 'Navigation',
   components: { SvgIcon },
+  setup() {
+    const userStore = useUserStore()
+    const { profileInfo } = storeToRefs(userStore)
+
+    return { profileInfo }
+  },
 })
 </script>
 

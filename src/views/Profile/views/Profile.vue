@@ -195,8 +195,8 @@ export default defineComponent({
 
     const endSwipeChoice = (side: SwipeSides) => {
       const onLeaveEnd = () => {
-        const adapt = sideToActionAdapter(side)
-        makeChoice(adapt)
+        const adaptAction = sideToActionAdapter(side)
+        makeChoice(adaptAction)
       }
       endSwipe({ leaveCallback: onLeaveEnd })
     }
@@ -227,7 +227,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .profile {
   padding: 0 8px;
   overflow-x: hidden;

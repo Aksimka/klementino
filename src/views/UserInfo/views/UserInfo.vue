@@ -3,6 +3,36 @@
     <div ref="pictureWrapper" class="profile-picture__wrapper">
       <ProfilePicture />
     </div>
+    <Container
+      v-if="currentUserid !== profileInfo.userId"
+      class="profile-actions"
+    >
+      <RoundButton
+        class="button-dislike profile-action"
+        @click="dislikeProfile"
+      >
+        <SvgIcon
+          class="profile-action__icon color_dislike"
+          name="cross"
+          :size="decreaseButton ? 22 : 34"
+        />
+      </RoundButton>
+      <RoundButton class="profile-action background_main">
+        <SvgIcon
+          class="picture-action__icon color_favorite"
+          :size="decreaseButton ? 22 : 34"
+          name="star"
+        />
+      </RoundButton>
+      <RoundButton class="button-like profile-action" @click="likeProfile">
+        <SvgIcon
+          class="picture-action__icon color_like"
+          :class="{ color_main: swipeSide === 'right' }"
+          name="heart"
+          :size="decreaseButton ? 22 : 34"
+        />
+      </RoundButton>
+    </Container>
     <Container class="profile-info">
       <DescriptionElement class="profile-info__element">
         <template #header>
@@ -39,6 +69,8 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs, ref } from 'vue'
+import { useUserStore } from '@/store/modules/user'
+import { storeToRefs } from 'pinia'
 import ProfilePicture from './../blocks/ProfilePicture.vue'
 import Text from '@/components/ui/Text/Text.vue'
 import Container from '@/components/ui/Container/Container.vue'
@@ -46,6 +78,10 @@ import Heading from '@/components/ui/Heading/Heading.vue'
 import DescriptionElement from '@/views/Profile/components/DescriptionElement.vue'
 import Chip from '@/components/ui/Chip/Chip.vue'
 import ChipsGroup from '@/components/ui/ChipsGroup/ChipsGroup.vue'
+import RoundButton from '@/components/ui/RoundButton/RoundButton.vue'
+import SvgIcon from '@/components/SvgIcon.vue'
+import useProfile from '@/hooks/useProfile'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'Main',
@@ -57,8 +93,18 @@ export default defineComponent({
     Container,
     Text,
     ProfilePicture,
+    RoundButton,
+    SvgIcon,
   },
   setup() {
+    const userStore = useUserStore()
+    const { profileInfo } = storeToRefs(userStore)
+
+    const router = useRouter()
+    const currentUserid = Number(router?.currentRoute.value.params.id)
+
+    console.log(profileInfo, 'profileInfo')
+
     const state = reactive({
       inputValue: null,
       decreaseButton: false,
@@ -74,6 +120,8 @@ export default defineComponent({
       ],
     })
 
+    const { likeProfile, dislikeProfile } = useProfile()
+
     document.addEventListener('scroll', () => {
       state.decreaseButton = window.scrollY > 10
     })
@@ -83,7 +131,15 @@ export default defineComponent({
 
     console.log(state, 'state')
 
-    return { ...toRefs(state), sectionWrapper, pictureWrapper }
+    return {
+      ...toRefs(state),
+      sectionWrapper,
+      pictureWrapper,
+      currentUserid,
+      profileInfo,
+      likeProfile,
+      dislikeProfile,
+    }
   },
 })
 </script>

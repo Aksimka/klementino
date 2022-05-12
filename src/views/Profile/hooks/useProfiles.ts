@@ -1,6 +1,7 @@
 import { computed, ComputedRef, Ref, ref } from 'vue'
 import { Profile } from '@/types'
 import profilesMock from '../helpers/mock/profiles'
+import useProfile from '@/hooks/useProfile'
 
 interface useProfilesType {
   profiles: Ref<Profile[]>
@@ -14,11 +15,13 @@ interface useProfilesType {
 }
 
 export default (): useProfilesType => {
+  const { likeProfile, dislikeProfile } = useProfile()
+
   const profiles = ref<Profile[]>(profilesMock)
   const prevProfiles = ref<Profile[]>([])
   const currentProfileIndex = ref<number>(0)
 
-  const currentProfile = computed(() => {
+  const currentProfile = computed<Profile>(() => {
     return profiles.value[currentProfileIndex.value]
   })
 
@@ -35,12 +38,12 @@ export default (): useProfilesType => {
   }
 
   const likeCurrentProfile = () => {
-    console.log('like')
+    likeProfile(currentProfile.value.userId)
     goNextProfile()
   }
 
   const dislikeCurrentProfile = () => {
-    console.log('dislike')
+    dislikeProfile(currentProfile.value.userId)
     goNextProfile()
   }
 
