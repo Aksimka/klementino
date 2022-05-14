@@ -92,7 +92,7 @@ export default (): UseSwipeType => {
   const stylesByPosition = computed(() => {
     const scale = 1 - Math.abs(dragOffset.value) / 1000
     return {
-      transform: 'translateX(' + dragOffset.value + 'px) scale(' + scale + ')',
+      transform: `translateX(${dragOffset.value}px) scale(${scale})`,
     }
   })
 

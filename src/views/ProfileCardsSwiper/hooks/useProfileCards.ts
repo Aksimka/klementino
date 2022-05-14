@@ -1,21 +1,10 @@
-import { computed, ComputedRef, Ref, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { Profile } from '@/types'
 import profileCardsMock from './../helpers/mock/profileCards'
 import useProfile from '@/hooks/useProfile'
 
-interface useProfilesType {
-  profiles: Ref<Profile[]>
-  prevProfiles: Ref<Profile[]>
-  currentProfileIndex: Ref<number>
-  currentProfile: ComputedRef<Profile>
-  combineName: (profile: Profile) => string
-  likeCurrentProfile: () => void
-  dislikeCurrentProfile: () => void
-  goNextProfile: () => void
-}
-
-export default (): useProfilesType => {
-  const { likeProfile, dislikeProfile } = useProfile()
+export default () => {
+  const { likeProfile, dislikeProfile, combineName } = useProfile()
 
   const profiles = ref<Profile[]>(profileCardsMock)
   const prevProfiles = ref<Profile[]>([])
@@ -33,14 +22,6 @@ export default (): useProfilesType => {
     }
   }
 
-  const combineName = (profile: Profile) => {
-    const nowYear = new Date().getFullYear()
-    const userBirthYear = new Date(profile.birthDate).getFullYear()
-    const computeAge = nowYear - userBirthYear
-
-    return `${profile.name}, ${computeAge}`
-  }
-
   const likeCurrentProfile = () => {
     likeProfile(currentProfile.value.userId)
     goNextProfile()
@@ -56,8 +37,8 @@ export default (): useProfilesType => {
     prevProfiles,
     currentProfileIndex,
     currentProfile,
-    goNextProfile,
     combineName,
+    goNextProfile,
     likeCurrentProfile,
     dislikeCurrentProfile,
   }

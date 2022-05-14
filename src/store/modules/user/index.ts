@@ -1,8 +1,15 @@
 import { defineStore } from 'pinia'
+import { Profile } from '@/types'
 
-export const useUserStore = defineStore('user', {
+type UserState = {
+  login: string
+  isPremium: boolean
+  profileInfo: Profile
+}
+
+const useUserStore = defineStore<string, UserState>('user', {
   state: () => ({
-    login: null,
+    login: 'aksimka97',
     isPremium: false,
     profileInfo: {
       userId: 0,
@@ -21,3 +28,5 @@ export const useUserStore = defineStore('user', {
     },
   }),
 })
+
+export default useUserStore

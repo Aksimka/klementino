@@ -1,6 +1,6 @@
 export default [
   {
-    userId: 10,
+    userId: 0,
     name: 'Aksimka',
     birthDate: '1997-08-05',
     isOnline: false,

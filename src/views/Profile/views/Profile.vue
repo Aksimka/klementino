@@ -1,7 +1,10 @@
 <template>
-  <div ref="sectionWrapper" class="profile">
+  <div v-if="currentProfile" ref="sectionWrapper" class="profile">
     <div ref="pictureWrapper" class="profile-picture__wrapper">
-      <ProfilePicture />
+      <ProfilePicture
+        :name="combineName(currentProfile)"
+        :images="currentProfile?.images"
+      />
     </div>
     <Container
       v-if="currentUserid !== profileInfo.userId"
@@ -27,7 +30,6 @@
       <RoundButton class="button-like profile-action" @click="likeProfile">
         <SvgIcon
           class="picture-action__icon color_like"
-          :class="{ color_main: swipeSide === 'right' }"
           name="heart"
           :size="decreaseButton ? 22 : 34"
         />
@@ -36,21 +38,18 @@
     <Container class="profile-info">
       <DescriptionElement class="profile-info__element">
         <template #header>
-          <Heading type="2" weight="bold">Aksimka, 24</Heading>
+          <Heading type="2" weight="bold">{{
+            combineName(currentProfile)
+          }}</Heading>
         </template>
-        <Text weight="bold"> Frontend developer </Text>
+        <Text weight="bold"> {{ currentProfile?.business }} </Text>
       </DescriptionElement>
       <DescriptionElement class="profile-info__element">
         <template #header>
           <Heading type="6" weight="800">About</Heading>
         </template>
         <Text weight="bold">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias at
-          blanditiis corporis culpa ea, eius et fugiat minima modi omnis ratione
-          ullam veritatis vitae. Architecto corporis cupiditate debitis deserunt
-          dolor dolorem eum harum laudantium nesciunt officiis reprehenderit
-          saepe, tenetur. Alias aliquam dolor ea eveniet ex explicabo fugit,
-          impedit neque tenetur!
+          {{ currentProfile?.about }}
         </Text>
       </DescriptionElement>
       <DescriptionElement class="profile-info__element">
@@ -58,7 +57,11 @@
           <Heading type="6" weight="bold">Interests</Heading>
         </template>
         <ChipsGroup>
-          <Chip v-for="i in chips" :key="i" class="profile-info__chip">
+          <Chip
+            v-for="i in currentProfile?.interests"
+            :key="i"
+            class="profile-info__chip"
+          >
             {{ i }}
           </Chip>
         </ChipsGroup>
@@ -68,9 +71,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, ref } from 'vue'
-import { useUserStore } from '@/store/modules/user'
+import { defineComponent, onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
+import { Profile } from '@/types'
+import useUserStore from '@/store/modules/user'
+import useProfile from '@/hooks/useProfile'
+import useProfileRequest from './../hooks/useProfileRequest'
 import ProfilePicture from './../blocks/ProfilePicture.vue'
 import Text from '@/components/ui/Text/Text.vue'
 import Container from '@/components/ui/Container/Container.vue'
@@ -80,8 +87,6 @@ import Chip from '@/components/ui/Chip/Chip.vue'
 import ChipsGroup from '@/components/ui/ChipsGroup/ChipsGroup.vue'
 import RoundButton from '@/components/ui/RoundButton/RoundButton.vue'
 import SvgIcon from '@/components/SvgIcon.vue'
-import useProfile from '@/hooks/useProfile'
-import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'Main',
@@ -97,46 +102,37 @@ export default defineComponent({
     SvgIcon,
   },
   setup() {
-    const userStore = useUserStore()
-    const { profileInfo } = storeToRefs(userStore)
-
     const router = useRouter()
     const currentUserid = Number(router?.currentRoute.value.params.id)
 
-    console.log(profileInfo, 'profileInfo')
+    const userStore = useUserStore()
+    const { profileInfo } = storeToRefs(userStore)
 
-    const state = reactive({
-      inputValue: null,
-      decreaseButton: false,
-      chips: [
-        'qweqwe',
-        'qwe',
-        'qweqfdsav',
-        'qwdcqw',
-        'qwfqw',
-        'svasvas',
-        'vbngbdsbfb',
-        'ascvd',
-      ],
+    const { getProfileById } = useProfileRequest()
+    const { likeProfile, dislikeProfile, combineName } = useProfile()
+
+    const decreaseButton = ref<boolean>(false)
+    let currentProfile = ref<Profile | null>(null)
+
+    onMounted(async () => {
+      currentProfile.value = await getProfileById(currentUserid)
     })
 
-    const { likeProfile, dislikeProfile } = useProfile()
-
     document.addEventListener('scroll', () => {
-      state.decreaseButton = window.scrollY > 10
+      decreaseButton.value = window.scrollY > 10
     })
 
     const sectionWrapper = ref<HTMLDivElement | null>(null)
     const pictureWrapper = ref<HTMLDivElement | null>(null)
 
-    console.log(state, 'state')
-
     return {
-      ...toRefs(state),
+      decreaseButton,
       sectionWrapper,
       pictureWrapper,
       currentUserid,
+      currentProfile,
       profileInfo,
+      combineName,
       likeProfile,
       dislikeProfile,
     }
