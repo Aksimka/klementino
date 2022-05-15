@@ -19,7 +19,6 @@ export default defineComponent({
   setup() {
     const appStore = useAppStore()
     let { theme } = appStore
-    console.log(appStore, 'useAppStore')
     return {
       currentTheme: theme,
     }

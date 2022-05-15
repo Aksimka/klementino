@@ -27,6 +27,7 @@
               :name="card.name"
               :old="`${card.old}`"
               :img="card.img"
+              @click="goProfile(card.userId)"
             />
           </div>
         </div>
@@ -42,16 +43,23 @@ import HorizontalSeparator from '@/views/Likes/components/HorizontalSeparator.vu
 import ProfileCard from '@/views/Likes/components/ProfileCard.vue'
 import Heading from '@/components/ui/Heading/Heading.vue'
 import likesCards from '../helpers/mock/likesCards'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'Likes',
   components: { Heading, ProfileCard, HorizontalSeparator, Container },
   setup() {
+    const router = useRouter()
+
     const state = reactive({
       sections: likesCards,
     })
 
-    return { ...toRefs(state) }
+    const goProfile = (id: number) => {
+      router.push(`/profile/${id}`)
+    }
+
+    return { ...toRefs(state), goProfile }
   },
 })
 </script>

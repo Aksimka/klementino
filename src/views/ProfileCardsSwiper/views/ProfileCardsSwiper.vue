@@ -107,7 +107,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, reactive, toRefs } from 'vue'
-import ProfilePicture from '@/views/ProfileCardsSwiper/blocks/ProfilePicture.vue'
+import ProfilePicture from '@/blocks/ProfilePicture.vue'
 import Text from '@/components/ui/Text/Text.vue'
 import Container from '@/components/ui/Container/Container.vue'
 import Heading from '@/components/ui/Heading/Heading.vue'

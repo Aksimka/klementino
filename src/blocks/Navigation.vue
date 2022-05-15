@@ -1,6 +1,6 @@
 <template>
   <nav class="navigation">
-    <router-link class="navigation-item" to="/">
+    <router-link class="navigation-item" to="/cards">
       <SvgIcon class="picture-action__icon" name="user-swipe" :size="34" />
     </router-link>
     <router-link class="navigation-item" to="/likes">
@@ -9,13 +9,13 @@
     <router-link class="navigation-item" to="/chats">
       <SvgIcon class="picture-action__icon" name="chats" :size="34" />
     </router-link>
-    <router-link class="navigation-item" :to="`/profile/${profileInfo.userId}`">
+    <router-link class="navigation-item" :to="`/my-profile`">
       <SvgIcon class="picture-action__icon" :size="34" name="user-circle" />
     </router-link>
   </nav>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from 'vue'
 import useUserStore from '@/store/modules/user'
 import { storeToRefs } from 'pinia'
