@@ -19,7 +19,7 @@
 import { defineComponent } from 'vue'
 import useUserStore from '@/store/modules/user'
 import { storeToRefs } from 'pinia'
-import SvgIcon from '@/components/SvgIcon'
+import SvgIcon from '@/components/SvgIcon.vue'
 
 export default defineComponent({
   name: 'Navigation',
