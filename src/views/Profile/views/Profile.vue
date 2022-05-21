@@ -6,10 +6,7 @@
         :images="currentProfile?.images"
       />
     </div>
-    <Container
-      v-if="currentUserid !== profileInfo.userId"
-      class="profile-actions"
-    >
+    <Container class="profile-actions">
       <RoundButton
         class="button-dislike profile-action"
         @click="dislikeProfile"
