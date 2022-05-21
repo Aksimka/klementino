@@ -1,5 +1,8 @@
 <template>
-  <fieldset class="input-wrapper" :class="{ 'input-wrapper_focused': focus }">
+  <fieldset
+    class="textarea-wrapper"
+    :class="{ 'textarea-wrapper_focused': focus }"
+  >
     <legend :class="{ legend_hidden: !localValue && !focus }">
       {{ label }}
     </legend>
@@ -7,14 +10,13 @@
       v-if="label"
       class="input__label"
       :class="{ input__label_down: !value && !focus }"
-      for="input"
+      for="textarea"
       >{{ label }}</label
     >
-    <input
-      id="input"
+    <textarea
+      id="textarea"
       v-model="localValue"
-      class="input"
-      type="text"
+      class="textarea"
       :placeholder="localPlaceholder"
       v-bind="$attrs"
       @focus="focus = true"
@@ -27,7 +29,7 @@
 import { defineComponent, ref, computed } from 'vue'
 
 export default defineComponent({
-  name: 'Input',
+  name: 'Textarea',
   inheritAttrs: false,
   props: {
     value: {
@@ -62,10 +64,11 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.input-wrapper {
+.textarea-wrapper {
   color: var(--color-main-text);
   border: 2px solid currentColor;
-  .input {
+  .textarea {
+    resize: none;
     width: 100%;
     font-size: 22px;
     border: 0;
@@ -89,7 +92,7 @@ export default defineComponent({
     font-size: 18px;
   }
 }
-.input-wrapper_focused {
+.textarea-wrapper_focused {
   border-color: var(--color-primary);
   .input__label {
     color: var(--color-primary);

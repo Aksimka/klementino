@@ -34,20 +34,31 @@
         />
       </RoundButton>
     </Container>
+
     <Container class="profile-info">
       <DescriptionElement class="profile-info__element">
         <template #header>
-          <Heading type="2" weight="bold">{{
-            combineName(profileInfo)
-          }}</Heading>
+          <div v-if="editMode" class="d-flex">
+            <Input :value="profileInfo.name" label="Name" />
+          </div>
+          <Heading v-else type="2" weight="bold"
+            >{{ combineName(profileInfo) }}
+          </Heading>
         </template>
-        <Text weight="bold"> {{ profileInfo?.business }} </Text>
+        <Input v-if="editMode" :value="profileInfo.business" label="business" />
+        <Text v-else weight="bold"> {{ profileInfo?.business }}</Text>
       </DescriptionElement>
       <DescriptionElement class="profile-info__element">
         <template #header>
-          <Heading type="6" weight="800">About</Heading>
+          <Heading v-if="!editMode" type="6" weight="800">About</Heading>
         </template>
-        <Text weight="bold">
+        <Textarea
+          v-if="editMode"
+          :value="profileInfo.about"
+          label="About"
+          rows="7"
+        ></Textarea>
+        <Text v-else weight="bold">
           {{ profileInfo?.about }}
         </Text>
       </DescriptionElement>
@@ -75,6 +86,7 @@ import { useRouter } from 'vue-router'
 import useUserStore from '@/store/modules/user'
 import useProfile from '@/hooks/useProfile'
 import useDecreaseButton from '@/hooks/useDecreaseButton'
+import useEditMode from '@/views/MyProfile/hooks/useEditMode'
 import ProfilePicture from '@/blocks/ProfilePicture.vue'
 import Text from '@/components/ui/Text/Text.vue'
 import Container from '@/components/ui/Container/Container.vue'
@@ -84,11 +96,14 @@ import Chip from '@/components/ui/Chip/Chip.vue'
 import ChipsGroup from '@/components/ui/ChipsGroup/ChipsGroup.vue'
 import RoundButton from '@/components/ui/RoundButton/RoundButton.vue'
 import SvgIcon from '@/components/SvgIcon.vue'
-import useEditMode from '@/views/MyProfile/hooks/useEditMode'
+import Input from '@/components/ui/Input/Input.vue'
+import Textarea from '@/components/ui/Textarea/Textarea.vue'
 
 export default defineComponent({
   name: 'Main',
   components: {
+    Textarea,
+    Input,
     SvgIcon,
     RoundButton,
     ChipsGroup,
@@ -136,6 +151,7 @@ export default defineComponent({
   width: calc(100% - 16px);
   margin: 0 auto;
   border-radius: 40px;
+
   .profile-actions {
     display: flex;
     justify-content: space-around;
@@ -143,21 +159,27 @@ export default defineComponent({
     position: fixed;
     bottom: calc(8px + var(--nav-heigth));
     width: 100%;
+    z-index: 2;
+
     .profile-action {
       background-color: var(--color-background-main);
     }
   }
+
   .confirm-edit {
     justify-content: center;
   }
+
   .profile-info {
     height: 1500px;
     padding-top: 40px;
+
     .profile-info__element {
       &:not(:last-child) {
         margin-bottom: 32px;
       }
     }
+
     .profile-info__chip {
       margin: 8px 0 0 8px;
     }

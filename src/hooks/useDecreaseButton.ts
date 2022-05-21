@@ -15,5 +15,5 @@ export default () => {
     document.removeEventListener('scroll', eventFunction)
   })
 
-  return decreaseButton
+  return { decreaseButton }
 }
