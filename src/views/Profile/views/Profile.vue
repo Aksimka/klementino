@@ -1,6 +1,6 @@
 <template>
-  <div v-if="currentProfile" ref="sectionWrapper" class="profile">
-    <div ref="pictureWrapper" class="profile-picture__wrapper">
+  <div v-if="currentProfile" class="profile">
+    <div class="profile-picture__wrapper">
       <ProfilePicture
         :name="combineName(currentProfile)"
         :images="currentProfile?.images"
@@ -75,6 +75,7 @@ import { Profile } from '@/types'
 import useUserStore from '@/store/modules/user'
 import useProfile from '@/hooks/useProfile'
 import useProfileRequest from './../hooks/useProfileRequest'
+import useDecreaseButton from '@/hooks/useDecreaseButton'
 import ProfilePicture from '@/blocks/ProfilePicture.vue'
 import Text from '@/components/ui/Text/Text.vue'
 import Container from '@/components/ui/Container/Container.vue'
@@ -105,27 +106,18 @@ export default defineComponent({
     const userStore = useUserStore()
     const { profileInfo } = storeToRefs(userStore)
 
+    const { decreaseButton } = useDecreaseButton()
     const { getProfileById } = useProfileRequest()
     const { likeProfile, dislikeProfile, combineName } = useProfile()
 
-    const decreaseButton = ref<boolean>(false)
     let currentProfile = ref<Profile | null>(null)
 
     onMounted(async () => {
       currentProfile.value = await getProfileById(currentUserid)
     })
 
-    document.addEventListener('scroll', () => {
-      decreaseButton.value = window.scrollY > 10
-    })
-
-    const sectionWrapper = ref<HTMLDivElement | null>(null)
-    const pictureWrapper = ref<HTMLDivElement | null>(null)
-
     return {
       decreaseButton,
-      sectionWrapper,
-      pictureWrapper,
       currentUserid,
       currentProfile,
       profileInfo,

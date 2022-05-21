@@ -7,7 +7,7 @@
       />
     </div>
     <Container v-if="!editMode" class="profile-actions">
-      <RoundButton class="profile-action">
+      <RoundButton class="profile-action background_main">
         <SvgIcon
           class="profile-action__icon color_primary"
           name="pencil"
@@ -17,7 +17,7 @@
       </RoundButton>
     </Container>
     <Container v-else class="profile-actions confirm-edit">
-      <RoundButton class="profile-action">
+      <RoundButton class="profile-action background_main">
         <SvgIcon
           class="profile-action__icon color_error"
           name="cross"
@@ -25,7 +25,7 @@
           @click="cancelChanges"
         />
       </RoundButton>
-      <RoundButton class="profile-action ml-4">
+      <RoundButton class="profile-action background_main ml-4">
         <SvgIcon
           class="profile-action__icon color_favorite"
           name="check"
@@ -70,11 +70,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
-import { Profile } from '@/types'
 import useUserStore from '@/store/modules/user'
 import useProfile from '@/hooks/useProfile'
+import useDecreaseButton from '@/hooks/useDecreaseButton'
 import ProfilePicture from '@/blocks/ProfilePicture.vue'
 import Text from '@/components/ui/Text/Text.vue'
 import Container from '@/components/ui/Container/Container.vue'
@@ -115,21 +115,12 @@ export default defineComponent({
       confirmChanges,
     } = useEditMode(profileInfo)
 
-    const decreaseButton = ref<boolean>(false)
-
-    document.addEventListener('scroll', () => {
-      decreaseButton.value = window.scrollY > 10
-    })
-
-    const sectionWrapper = ref<HTMLDivElement | null>(null)
-    const pictureWrapper = ref<HTMLDivElement | null>(null)
+    const { decreaseButton } = useDecreaseButton()
 
     return {
       profileInfo: currentProfileObject,
       editMode,
       decreaseButton,
-      sectionWrapper,
-      pictureWrapper,
       currentUserid,
       toggleEditMode,
       cancelChanges,

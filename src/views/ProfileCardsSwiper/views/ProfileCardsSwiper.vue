@@ -106,7 +106,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, toRefs } from 'vue'
+import { computed, defineComponent } from 'vue'
 import ProfilePicture from '@/blocks/ProfilePicture.vue'
 import Text from '@/components/ui/Text/Text.vue'
 import Container from '@/components/ui/Container/Container.vue'
@@ -118,6 +118,7 @@ import RoundButton from '@/components/ui/RoundButton/RoundButton.vue'
 import SvgIcon from '@/components/SvgIcon.vue'
 import useSwipe, { SwipeSides } from '../hooks/useSwipe'
 import useProfileCards from '../hooks/useProfileCards'
+import useDecreaseButton from '@/hooks/useDecreaseButton'
 
 type Choices = 'like' | 'dislike'
 
@@ -156,17 +157,10 @@ export default defineComponent({
       dislikeCurrentProfile,
     } = useProfileCards()
 
+    const { decreaseButton } = useDecreaseButton()
+
     const nextProfileBySwipeState = computed(() => {
       return profiles.value[1]
-    })
-
-    const state = reactive({
-      inputValue: null,
-      decreaseButton: false,
-    })
-
-    document.addEventListener('scroll', () => {
-      state.decreaseButton = window.scrollY > 10
     })
 
     const makeChoice = (choice: Choices | undefined) => {
@@ -202,7 +196,7 @@ export default defineComponent({
     }
 
     return {
-      ...toRefs(state),
+      decreaseButton,
       stylesByPosition,
       prevStylesByPosition,
       currentTouchEvent,
