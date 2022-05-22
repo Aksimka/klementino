@@ -39,13 +39,17 @@
       <DescriptionElement class="profile-info__element">
         <template #header>
           <div v-if="editMode" class="d-flex">
-            <Input :value="profileInfo.name" label="Name" />
+            <Input v-model:value="profileInfo.name" label="Name" />
           </div>
           <Heading v-else type="2" weight="bold"
             >{{ combineName(profileInfo) }}
           </Heading>
         </template>
-        <Input v-if="editMode" :value="profileInfo.business" label="business" />
+        <Input
+          v-if="editMode"
+          v-model:value="profileInfo.business"
+          label="business"
+        />
         <Text v-else weight="bold"> {{ profileInfo?.business }}</Text>
       </DescriptionElement>
       <DescriptionElement class="profile-info__element">
@@ -54,7 +58,7 @@
         </template>
         <Textarea
           v-if="editMode"
-          :value="profileInfo.about"
+          v-model:value="profileInfo.about"
           label="About"
           rows="7"
         ></Textarea>
@@ -66,13 +70,31 @@
         <template #header>
           <Heading type="6" weight="bold">Interests</Heading>
         </template>
+        <div v-if="editMode" class="add-chips">
+          <div class="add-chips__input">
+            <Input v-model:value="editChipText" placeholder="input tag..." />
+          </div>
+          <div class="add-chips__confirm">
+            <SvgIcon
+              :disabled="!editChipText"
+              name="plus"
+              :size="34"
+              @click="addInterest(editChipText)"
+            />
+          </div>
+        </div>
         <ChipsGroup>
           <Chip
             v-for="i in profileInfo?.interests"
             :key="i"
             class="profile-info__chip"
           >
-            {{ i }}
+            <template #default>
+              {{ i }}
+            </template>
+            <template v-if="editMode" #icon>
+              <SvgIcon name="cross" :size="16" @click="removeInterest(i)" />
+            </template>
           </Chip>
         </ChipsGroup>
       </DescriptionElement>
@@ -125,9 +147,12 @@ export default defineComponent({
     const {
       editMode,
       currentProfileObject,
+      editChipText,
       toggleEditMode,
       cancelChanges,
       confirmChanges,
+      addInterest,
+      removeInterest,
     } = useEditMode(profileInfo)
 
     const { decreaseButton } = useDecreaseButton()
@@ -137,6 +162,9 @@ export default defineComponent({
       editMode,
       decreaseButton,
       currentUserid,
+      editChipText,
+      addInterest,
+      removeInterest,
       toggleEditMode,
       cancelChanges,
       confirmChanges,
@@ -182,6 +210,17 @@ export default defineComponent({
 
     .profile-info__chip {
       margin: 8px 0 0 8px;
+    }
+  }
+  .add-chips {
+    display: flex;
+    align-items: center;
+    .add-chips__confirm {
+      margin-left: 4px;
+      color: var(--color-primary);
+    }
+    .add-chips__confirm + .disabled {
+      color: var(--color-gray);
     }
   }
 }

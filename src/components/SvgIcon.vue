@@ -30,9 +30,13 @@ export default defineComponent({
       type: Number,
       default: 28,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
-    const { name, size } = toRefs(props)
+    const { name, size, disabled } = toRefs(props)
     const iconPath = computed(() => {
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       let icon = require(`@/assets/icons/${name.value}.svg`)
@@ -43,7 +47,7 @@ export default defineComponent({
     })
 
     const className = computed(() => {
-      return 'svg-icon svg-icon--' + name.value
+      return [`svg-icon svg-icon--${name.value}`, { disabled: disabled.value }]
     })
 
     const computedStyles = computed(() => {
@@ -58,9 +62,13 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .svg-icon {
   fill: currentColor;
   transition: 0.2s;
+}
+.disabled {
+  color: var(--color-gray);
+  pointer-events: none;
 }
 </style>

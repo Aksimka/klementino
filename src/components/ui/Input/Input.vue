@@ -1,6 +1,6 @@
 <template>
   <fieldset class="input-wrapper" :class="{ 'input-wrapper_focused': focus }">
-    <legend :class="{ legend_hidden: !localValue && !focus }">
+    <legend :class="{ legend_hidden: (!localValue && !focus) || !label }">
       {{ label }}
     </legend>
     <label
@@ -19,6 +19,7 @@
       v-bind="$attrs"
       @focus="focus = true"
       @blur="focus = false"
+      autocomplete="off"
     />
   </fieldset>
 </template>
