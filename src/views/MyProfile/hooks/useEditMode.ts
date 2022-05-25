@@ -1,35 +1,35 @@
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { Profile } from '@/types'
+import { deepCopy } from '@/helpers'
 
 export default (profile: Profile) => {
   const editMode = ref<boolean>(false)
-  const savedProfile = profile
-  const profileToEdit = ref<Profile | null>(null)
+  const backupProfile = ref<Profile>(profile)
+  const profileToEdit = ref<Profile | null>(profile)
   const editChipText = ref<string>('')
 
-  const currentProfileObject = computed<Profile>(() => {
-    return editMode.value && profileToEdit.value
-      ? profileToEdit.value
-      : savedProfile
-  })
+  // const currentProfileObject = computed<Profile>({
+  //   get() {
+  //     return editMode.value && profileToEdit.value
+  //       ? profileToEdit.value
+  //       : backupProfile.value
+  //   },
+  //   set(val) {
+  //     profileToEdit.value = val
+  //   },
+  // })
 
-  const toggleEditMode = () => {
-    editMode.value = !editMode.value
-    if (editMode.value) {
-      profileToEdit.value = profile
-    } else {
-      profileToEdit.value = null
-    }
+  const setEditMode = (val: boolean) => {
+    editMode.value = val
   }
 
   const cancelChanges = () => {
-    toggleEditMode()
+    setEditMode(false)
   }
 
   const confirmChanges = (newProfile: Profile) => {
     const newProfileData = { ...newProfile }
-    toggleEditMode()
-
+    setEditMode(false)
     return newProfileData
   }
 
@@ -50,11 +50,11 @@ export default (profile: Profile) => {
   return {
     editMode,
     profileToEdit,
-    currentProfileObject,
+    // currentProfileObject,
     editChipText,
     addInterest,
     removeInterest,
-    toggleEditMode,
+    setEditMode,
     confirmChanges,
     cancelChanges,
   }

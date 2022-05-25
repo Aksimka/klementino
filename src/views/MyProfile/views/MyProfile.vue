@@ -12,7 +12,7 @@
           class="profile-action__icon color_primary"
           name="pencil"
           :size="decreaseButton ? 22 : 34"
-          @click="toggleEditMode"
+          @click="setEditMode(true)"
         />
       </RoundButton>
     </Container>
@@ -105,6 +105,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
+import { deepCopy } from '@/helpers'
 import useUserStore from '@/store/modules/user'
 import useProfile from '@/hooks/useProfile'
 import useDecreaseButton from '@/hooks/useDecreaseButton'
@@ -120,6 +121,7 @@ import RoundButton from '@/components/ui/RoundButton/RoundButton.vue'
 import SvgIcon from '@/components/SvgIcon.vue'
 import Input from '@/components/ui/Input/Input.vue'
 import Textarea from '@/components/ui/Textarea/Textarea.vue'
+import { Profile } from '@/types'
 
 export default defineComponent({
   name: 'Main',
@@ -146,9 +148,9 @@ export default defineComponent({
     const { combineName } = useProfile()
     const {
       editMode,
-      currentProfileObject,
       editChipText,
-      toggleEditMode,
+      profileToEdit,
+      setEditMode,
       cancelChanges,
       confirmChanges,
       addInterest,
@@ -158,14 +160,14 @@ export default defineComponent({
     const { decreaseButton } = useDecreaseButton()
 
     return {
-      profileInfo: currentProfileObject,
+      profileInfo: profileToEdit,
       editMode,
       decreaseButton,
       currentUserid,
       editChipText,
       addInterest,
       removeInterest,
-      toggleEditMode,
+      setEditMode,
       cancelChanges,
       confirmChanges,
       combineName,
