@@ -13,5 +13,4 @@ app.use(router)
 app.use(Vue3TouchEvents, {
   dragFrequency: 1,
 })
-console.log(app, 'app')
 app.mount('#app')

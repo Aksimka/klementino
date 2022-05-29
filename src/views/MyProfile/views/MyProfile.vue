@@ -67,6 +67,7 @@
         </Text>
       </DescriptionElement>
       <DescriptionElement class="profile-info__element">
+        <pre>{{ originalProfile }}</pre>
         <template #header>
           <Heading type="6" weight="bold">Interests</Heading>
         </template>
@@ -155,12 +156,13 @@ export default defineComponent({
       confirmChanges,
       addInterest,
       removeInterest,
-    } = useEditMode(profileInfo)
+    } = useEditMode(deepCopy(profileInfo))
 
     const { decreaseButton } = useDecreaseButton()
 
     return {
       profileInfo: profileToEdit,
+      originalProfile: profileInfo,
       editMode,
       decreaseButton,
       currentUserid,

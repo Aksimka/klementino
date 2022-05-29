@@ -5,28 +5,32 @@ export const getImage = (path: string): Promise<string> | null => {
 type AnyObject = Record<string, any>
 type AnyDifficult = AnyObject | any[]
 
-export const deepCopy = (source: AnyDifficult): AnyDifficult => {
+const isPrimitive = (test: any) => {
+  return test !== Object(test)
+}
+
+export const deepCopy = <T extends AnyDifficult>(source: T): T => {
   const result = typeof source === 'object' ? {} : []
 
-  const recu = (src: any, res: any, key?: any) => {
-    if (src instanceof Array) {
-      for (const [index, item] of src) {
-        if (typeof item === 'object') {
-          recu(item, res[index])
-        } else {
-          res.push(item)
-        }
-      }
-    } else if (typeof src === 'object' && !key) {
-      for (const key in src) {
-        recu(src, res, key)
-      }
+  const recu = (source: any, target: any, key?: any) => {
+    const _source = key !== undefined ? source[key] : source
+    if (isPrimitive(_source)) {
+      target[key] = source[key]
     } else {
-      res[key] = src[key]
+      if (Array.isArray(_source)) {
+        key && (target[key] = new Array(target[key]?.length))
+        _source.forEach((i, index) => {
+          recu(source[key] || source, target[key] || target, index)
+        })
+      } else {
+        key && (target[key] = {})
+        Object.keys(source[key] || source).forEach((srcKey) => {
+          recu(source[key] || source, target[key] || target, srcKey)
+        })
+      }
     }
   }
 
   recu(source, result)
-
-  return result
+  return result as T
 }
