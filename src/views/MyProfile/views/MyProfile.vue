@@ -67,7 +67,6 @@
         </Text>
       </DescriptionElement>
       <DescriptionElement class="profile-info__element">
-        <pre>{{ originalProfile }}</pre>
         <template #header>
           <Heading type="6" weight="bold">Interests</Heading>
         </template>
@@ -122,7 +121,6 @@ import RoundButton from '@/components/ui/RoundButton/RoundButton.vue'
 import SvgIcon from '@/components/SvgIcon.vue'
 import Input from '@/components/ui/Input/Input.vue'
 import Textarea from '@/components/ui/Textarea/Textarea.vue'
-import { Profile } from '@/types'
 
 export default defineComponent({
   name: 'Main',

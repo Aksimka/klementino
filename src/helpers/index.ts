@@ -2,15 +2,14 @@ export const getImage = (path: string): Promise<string> | null => {
   return require(`@/assets/${path}`)
 }
 
-type AnyObject = Record<string, any>
-type AnyDifficult = AnyObject | any[]
+type AnyDifficult = Record<string, any> | any[]
 
 const isPrimitive = (test: any) => {
   return test !== Object(test)
 }
 
 export const deepCopy = <T extends AnyDifficult>(source: T): T => {
-  const result = typeof source === 'object' ? {} : []
+  const result = Array.isArray(source) ? [] : {}
 
   const recu = (source: any, target: any, key?: any) => {
     const _source = key !== undefined ? source[key] : source
