@@ -1,4 +1,4 @@
-import { computed, Ref, ComputedRef, ref, reactive } from 'vue'
+import { computed, ref, reactive } from 'vue'
 
 export type SwipeSides = 'left' | 'right'
 
@@ -6,24 +6,7 @@ type CallbackPayload = {
   leaveCallback: () => void
 }
 
-type UseSwipeType = {
-  dragOffset: Ref<number>
-  initTouchEvent: Ref<Touch | null>
-  currentTouchEvent: Ref<Touch | null>
-  swipeSide: Ref<SwipeSides | null>
-  stylesByPosition: ComputedRef<Record<'transform', string>>
-  prevStylesByPosition: ComputedRef<Record<'transform', string>>
-  swipeStates: {
-    isStart: boolean
-    isSwiping: boolean
-    isEnds: boolean
-  }
-  swipeHandler(e: TouchEventInit): void
-  startSwipe(e: TouchEventInit): void
-  endSwipe(payload?: CallbackPayload): void
-}
-
-export default (): UseSwipeType => {
+export default () => {
   const dragOffset = ref<number>(0)
   const initTouchEvent = ref<Touch | null>(null)
   const currentTouchEvent = ref<Touch | null>(null)
