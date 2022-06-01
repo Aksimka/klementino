@@ -34,10 +34,10 @@ export default (): UseSwipeType => {
     isEnds: false,
   })
 
-  const swipeHandler = (e: TouchEventInit) => {
+  const swipeHandler = (e: any) => {
     swipeStates.isStart = false
     swipeStates.isSwiping = true
-    const touch = e.touches?.[0]
+    const touch = e.touches ? e.touches[0] : e
     if (window.pageYOffset >= 30) {
       endSwipe()
       return
@@ -81,11 +81,11 @@ export default (): UseSwipeType => {
       default:
         dragOffset.value = 0
     }
-    swipeSide.value = null
     setTimeout(() => {
       swipeStates.isEnds = false
       dragOffset.value = 0
       leaveCallback && leaveCallback()
+      swipeSide.value = null
     }, 200)
   }
 

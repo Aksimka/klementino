@@ -1,5 +1,8 @@
 <template>
-  <div :class="`theme_${currentTheme}`">
+  <div v-if="isDesktop">
+    <OnlyMobile />
+  </div>
+  <div v-else :class="`theme_${currentTheme}`">
     <Header />
     <Navigation />
     <div class="window-content">
@@ -10,17 +13,21 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Navigation from '@/blocks/Navigation.vue'
 import { useAppStore } from '@/store/modules/app'
+import useClientSize from '@/hooks/useClientSize'
+import Navigation from '@/blocks/Navigation.vue'
 import Header from '@/blocks/Header.vue'
+import OnlyMobile from '@/blocks/OnlyMobile.vue'
 
 export default defineComponent({
-  components: { Header, Navigation },
+  components: { OnlyMobile, Header, Navigation },
   setup() {
     const appStore = useAppStore()
+    const { isDesktop } = useClientSize()
     let { theme } = appStore
     return {
       currentTheme: theme,
+      isDesktop,
     }
   },
 })

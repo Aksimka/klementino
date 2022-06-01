@@ -3,14 +3,14 @@
     <div class="profiles-swiper">
       <div
         v-touch:drag="swipeHandler"
+        v-touch:press="startSwipe"
+        v-touch:release="endSwipeChoice"
         class="profiles-swiper__current-profile swiper-size-limit"
         :class="{
           smooth: !swipeStates.isSwiping && swipeStates.isEnds,
           pan: swipeStates.isSwiping,
         }"
         :style="stylesByPosition"
-        @touchstart="startSwipe"
-        @touchend="endSwipeChoice(swipeSide)"
       >
         <ProfilePicture
           :images="currentProfile.images"
@@ -176,7 +176,7 @@ export default defineComponent({
       }
     }
 
-    const sideToActionAdapter = (side: SwipeSides) => {
+    const sideToActionAdapter = (side: SwipeSides | null) => {
       switch (side) {
         case 'left':
           return 'dislike'
@@ -187,9 +187,9 @@ export default defineComponent({
       }
     }
 
-    const endSwipeChoice = (side: SwipeSides) => {
+    const endSwipeChoice = () => {
       const onLeaveEnd = () => {
-        const adaptAction = sideToActionAdapter(side)
+        const adaptAction = sideToActionAdapter(swipeSide.value)
         makeChoice(adaptAction)
       }
       endSwipe({ leaveCallback: onLeaveEnd })
