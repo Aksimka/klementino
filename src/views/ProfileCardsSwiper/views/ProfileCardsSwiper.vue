@@ -38,7 +38,7 @@
           `${swipeSide === 'left' ? 'background_dislike' : 'background_main'}`,
           { active: swipeSide === 'left' },
         ]"
-        @click="makeChoice('dislike')"
+        @click="makeChoiceAndSwipeOut('dislike')"
       >
         <SvgIcon
           class="profile-action__icon color_dislike"
@@ -60,7 +60,7 @@
           `${swipeSide === 'right' ? 'background_like' : 'background_main'}`,
           { active: swipeSide === 'right' },
         ]"
-        @click="makeChoice('like')"
+        @click="makeChoiceAndSwipeOut('like')"
       >
         <SvgIcon
           class="picture-action__icon color_like"
@@ -142,17 +142,17 @@ export default defineComponent({
       stylesByPosition,
       prevStylesByPosition,
       dragOffset,
+      swipeStates,
       swipeHandler,
       startSwipe,
-      swipeStates,
       endSwipe,
     } = useSwipe()
 
     const {
       currentProfile,
       currentProfileIndex,
-      combineName,
       profiles,
+      combineName,
       likeCurrentProfile,
       dislikeCurrentProfile,
     } = useProfileCards()
@@ -162,6 +162,17 @@ export default defineComponent({
     const nextProfileBySwipeState = computed(() => {
       return profiles.value[1]
     })
+
+    const sideActionAdapter = {
+      bySide: {
+        left: 'dislike',
+        right: 'like',
+      },
+      byAction: {
+        dislike: 'left',
+        like: 'right',
+      },
+    }
 
     const makeChoice = (choice: Choices | undefined) => {
       switch (choice) {
@@ -176,20 +187,18 @@ export default defineComponent({
       }
     }
 
-    const sideToActionAdapter = (side: SwipeSides | null) => {
-      switch (side) {
-        case 'left':
-          return 'dislike'
-        case 'right':
-          return 'like'
-        default:
-          return
-      }
+    const makeChoiceAndSwipeOut = (choice: Choices) => {
+      endSwipe({
+        leaveCallback: () => makeChoice(choice),
+        swipeSide: sideActionAdapter.byAction[choice] as SwipeSides,
+      })
     }
 
     const endSwipeChoice = () => {
       const onLeaveEnd = () => {
-        const adaptAction = sideToActionAdapter(swipeSide.value)
+        const adaptAction =
+          swipeSide.value &&
+          (sideActionAdapter.bySide[swipeSide.value] as Choices)
         makeChoice(adaptAction)
       }
       endSwipe({ leaveCallback: onLeaveEnd })
@@ -213,6 +222,7 @@ export default defineComponent({
       combineName,
 
       makeChoice,
+      makeChoiceAndSwipeOut,
       endSwipeChoice,
 
       nextProfileBySwipeState,

@@ -16,7 +16,6 @@ export default () => {
 
   const goNextProfile = () => {
     const profile = profiles.value.splice(0, 1)
-    console.log(profile, profiles, 'profiles')
     if (profile?.length) {
       prevProfiles.value.push(...profile)
     }

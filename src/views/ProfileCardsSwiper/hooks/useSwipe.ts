@@ -2,7 +2,8 @@ import { computed, ref, reactive } from 'vue'
 
 export type SwipeSides = 'left' | 'right'
 
-type CallbackPayload = {
+type EndSwipePayload = {
+  swipeSide?: SwipeSides
   leaveCallback: () => void
 }
 
@@ -10,7 +11,7 @@ export default () => {
   const dragOffset = ref<number>(0)
   const initTouchEvent = ref<Touch | null>(null)
   const currentTouchEvent = ref<Touch | null>(null)
-  const swipeSide = ref<SwipeSides | null>(null)
+  const swipeSide = ref<SwipeSides | undefined>(undefined)
   const swipeStates = reactive({
     isStart: false,
     isSwiping: false,
@@ -37,7 +38,7 @@ export default () => {
     } else if (dragOffset.value < -100) {
       swipeSide.value = 'left'
     } else {
-      swipeSide.value = null
+      swipeSide.value = undefined
     }
 
     currentTouchEvent.value = touch
@@ -49,12 +50,13 @@ export default () => {
     if (!touch) return
     initTouchEvent.value = touch
   }
-  const endSwipe = (payload?: CallbackPayload) => {
+  const endSwipe = (payload?: EndSwipePayload) => {
     const leaveCallback = payload?.leaveCallback
+    const side = payload?.swipeSide
     swipeStates.isEnds = true
     swipeStates.isSwiping = false
     currentTouchEvent.value = null
-    switch (swipeSide.value) {
+    switch (swipeSide.value || side) {
       case 'left':
         dragOffset.value = -400
         break
@@ -64,11 +66,12 @@ export default () => {
       default:
         dragOffset.value = 0
     }
+    console.log(dragOffset.value, 'dragOffset');
     setTimeout(() => {
       swipeStates.isEnds = false
       dragOffset.value = 0
       leaveCallback && leaveCallback()
-      swipeSide.value = null
+      swipeSide.value = undefined
     }, 200)
   }
 
