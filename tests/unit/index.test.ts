@@ -1,13 +1,12 @@
 import { deepCopy } from './../../src/helpers'
 
-describe('testing some individual funcitons', () => {
+describe('testing some individual functions', () => {
   const emptyArr = []
   const emptyObj = {}
   const difficultObj = { a: 'a', b: ['c', 'd', { e: 'e' }], f: { g: 'g' } }
   const difficultArray = ['a', ['b', { c: 'c', d: ['e', 'f'] }]]
 
   test('should be the another but similar', () => {
-    expect(['foo']).not.toBe(['foo'])
     const emptyArrCopy = deepCopy(emptyArr)
     expect(emptyArrCopy).not.toBe(emptyArr)
     expect(emptyArrCopy).toEqual(emptyArr)

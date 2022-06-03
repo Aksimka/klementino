@@ -14,7 +14,7 @@
 
 <script>
 import { defineComponent } from 'vue'
-import mobileSmallImage from '@/assets/images/mobile_small.png'
+import mobileSmallImage from '@/assets/images/klementino_mobile_layout.png'
 
 export default defineComponent({
   name: 'OnlyMobile',
