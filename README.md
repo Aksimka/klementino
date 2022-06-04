@@ -1,29 +1,19 @@
-# klementino
+### 📖 Preface
 
-## Project setup
-```
-yarn install
-```
+##### 👨‍👩‍👧‍👦 People are social creatures, it's nature.
+##### 📊 By statistics if one person is alone, he more prone for some deseases, more mental problems. A lot of people spends a very lot of time for finding their soulmates or just a good communication.
+##### Live demo: https://klementino-5url7a94y-aksimka.vercel.app/#/likes
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+------------
 
-### Compiles and minifies for production
-```
-yarn build
-```
+### 📱About project
 
-### Run your unit tests
-```
-yarn test:unit
-```
+##### This project is free and open source dating app 🙎‍♂️👰‍♀️ that solves this problem and helps people to get more social interaction
 
-### Lints and fixes files
-```
-yarn lint
-```
+![](src/assets/images/about_project/klementino_mobile_layout.png)
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+------------
+
+### Technologies
+
+![](src/assets/images/about_project/techs.png)
