@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="header-logo">
-      <SvgIcon name="rainbow"></SvgIcon>
+      <SvgIcon name="logo" size="42"></SvgIcon>
       <span class="header-logo__text">klementino</span>
     </div>
     <div class="header-tools">
@@ -48,7 +48,6 @@ export default {
     font-weight: bolder;
     color: var(--color-primary);
     .header-logo__text {
-      margin-left: 8px;
     }
   }
   .header-tools {
