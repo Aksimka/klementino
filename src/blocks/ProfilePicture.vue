@@ -15,7 +15,7 @@
         <template v-for="(img, index) in images" :key="index">
           <img
             v-show="index === currentImageIndex"
-            :src="require(`@/assets/${img}`)"
+            :src="require(`@/assets/images/${img}`)"
             alt="profile image"
           />
         </template>

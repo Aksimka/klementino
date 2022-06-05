@@ -47,8 +47,6 @@ export default {
     font-size: 20px;
     font-weight: bolder;
     color: var(--color-primary);
-    .header-logo__text {
-    }
   }
   .header-tools {
     display: flex;

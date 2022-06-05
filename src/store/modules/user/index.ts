@@ -19,12 +19,7 @@ const useUserStore = defineStore<string, UserState>('user', {
       business: 'Frontend developer',
       about: 'I give you site, you give me pussy',
       interests: ['beer', 'diving', 'sport'],
-      images: [
-        'images/dg.png',
-        'images/6.jpeg',
-        'images/3.jpeg',
-        'images/4.jpg',
-      ],
+      images: ['dg.png', 'girls/6.jpeg', 'girls/3.jpeg', 'girls/4.jpg'],
     },
   }),
 })

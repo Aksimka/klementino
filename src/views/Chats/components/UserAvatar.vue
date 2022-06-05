@@ -16,7 +16,7 @@
             <img
               v-show="img === images[currentImageIndex]"
               class="user-avatar__image"
-              :src="require(`@/assets/${img}`)"
+              :src="require(`@/assets/images/${img}`)"
               alt="avatar"
             />
           </template>

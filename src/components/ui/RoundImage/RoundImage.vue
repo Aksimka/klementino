@@ -1,7 +1,7 @@
 <template>
   <div class="round-image">
     <img
-      :src="require(`@/assets/${img}`)"
+      :src="require(`@/assets/images/${img}`)"
       v-bind="$attrs"
       :alt="$attrs.alt || 'Аватар пользователя'"
     />
@@ -16,7 +16,7 @@ export default defineComponent({
   props: {
     img: {
       type: String,
-      default: 'images/no-img.jpg',
+      default: 'no-img.jpg',
     },
   },
 })

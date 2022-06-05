@@ -7,7 +7,7 @@ export default [
     business: 'Frontend developer',
     about: 'I give you site, you give me pussy',
     interests: ['beer', 'diving', 'sport'],
-    images: ['images/dg.png', 'images/6.jpeg', 'images/3.jpeg', 'images/4.jpg'],
+    images: ['girls/dg.png', 'girls/6.jpeg', 'girls/3.jpeg', 'girls/4.jpg'],
   },
   {
     userId: 1,
@@ -18,10 +18,10 @@ export default [
     about: "Am a tiger girl, you're pussy boy",
     interests: ['beer', 'diving', 'sport'],
     images: [
-      'images/mia/1.jpeg',
-      'images/mia/2.jpeg',
-      'images/mia/3.jpg',
-      'images/mia/4.jpeg',
+      'girls/mia/1.jpeg',
+      'girls/mia/2.jpeg',
+      'girls/mia/3.jpg',
+      'girls/mia/4.jpeg',
     ],
   },
   {
@@ -32,7 +32,7 @@ export default [
     business: 'Sex developer',
     about: "Am a tiger girl, you're pussy boy",
     interests: ['beer', 'diving', 'sport'],
-    images: ['images/1.jpeg', 'images/2.jpeg', 'images/3.jpeg', 'images/4.jpg'],
+    images: ['girls/1.jpeg', 'girls/2.jpeg', 'girls/3.jpeg', 'girls/4.jpg'],
   },
   {
     userId: 3,
@@ -42,7 +42,7 @@ export default [
     business: 'Sex developer',
     about: "Am a tiger girl, you're pussy boy",
     interests: ['beer', 'diving', 'sport'],
-    images: ['images/5.jpg', 'images/6.jpeg', 'images/3.jpeg', 'images/4.jpg'],
+    images: ['girls/5.jpg', 'girls/6.jpeg', 'girls/3.jpeg', 'girls/4.jpg'],
   },
   {
     userId: 4,
@@ -52,7 +52,7 @@ export default [
     business: 'Sex developer',
     about: "Am a tiger girl, you're pussy boy",
     interests: ['beer', 'diving', 'sport'],
-    images: ['images/7.jpeg', 'images/8.jpg', 'images/1.jpeg', 'images/4.jpg'],
+    images: ['girls/7.jpeg', 'girls/8.jpg', 'girls/1.jpeg', 'girls/4.jpg'],
   },
   {
     userId: 5,
@@ -63,10 +63,10 @@ export default [
     about: "Am a tiger girl, you're pussy boy",
     interests: ['beer', 'diving', 'sport'],
     images: [
-      'images/9.jpeg',
-      'images/10.jpg',
-      'images/3.jpeg',
-      'images/1.jpeg',
+      'girls/9.jpeg',
+      'girls/10.jpg',
+      'girls/3.jpeg',
+      'girls/1.jpeg',
     ],
   },
   {
@@ -78,10 +78,10 @@ export default [
     about: "Am a tiger girl, you're pussy boy",
     interests: ['beer', 'diving', 'sport'],
     images: [
-      'images/11.jpeg',
-      'images/12.jpeg',
-      'images/3.jpeg',
-      'images/4.jpg',
+      'girls/11.jpeg',
+      'girls/12.jpeg',
+      'girls/3.jpeg',
+      'girls/4.jpg',
     ],
   },
   {
@@ -93,10 +93,10 @@ export default [
     about: "Am a tiger girl, you're pussy boy",
     interests: ['beer', 'diving', 'sport'],
     images: [
-      'images/13.jpeg',
-      'images/14.jpg',
-      'images/3.jpeg',
-      'images/4.jpg',
+      'girls/13.jpeg',
+      'girls/14.jpg',
+      'girls/3.jpeg',
+      'girls/4.jpg',
     ],
   },
   {
@@ -107,7 +107,7 @@ export default [
     business: 'Sex developer',
     about: "Am a tiger girl, you're pussy boy",
     interests: ['beer', 'diving', 'sport'],
-    images: ['images/4.jpg', 'images/1.jpeg', 'images/3.jpeg', 'images/4.jpg'],
+    images: ['girls/4.jpg', 'girls/1.jpeg', 'girls/3.jpeg', 'girls/4.jpg'],
   },
   {
     userId: 9,
@@ -117,6 +117,6 @@ export default [
     business: 'Sex developer',
     about: "Am a tiger girl, you're pussy boy",
     interests: ['beer', 'diving', 'sport'],
-    images: ['images/3.jpeg', 'images/2.jpeg', 'images/9.jpeg', 'images/4.jpg'],
+    images: ['girls/3.jpeg', 'girls/2.jpeg', 'girls/9.jpeg', 'girls/4.jpg'],
   },
 ]

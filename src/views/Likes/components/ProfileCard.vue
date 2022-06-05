@@ -2,7 +2,7 @@
   <div class="profile-card">
     <div class="profile-card__image-wrapper">
       <div class="blackout-layer"></div>
-      <img :src="require(`@/assets/${img}`)" alt="profile image" />
+      <img :src="require(`@/assets/images/${img}`)" alt="profile image" />
     </div>
     <div class="profile-card-footer">
       <div class="profile-card-footer__name">{{ name }}, {{ old }}</div>
