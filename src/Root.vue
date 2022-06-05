@@ -3,11 +3,7 @@
     <OnlyMobile />
   </div>
   <div v-else :class="`theme_${currentTheme}`">
-    <Header />
-    <Navigation />
-    <div class="window-content">
-      <router-view />
-    </div>
+    <router-view />
   </div>
 </template>
 
@@ -15,12 +11,10 @@
 import { defineComponent } from 'vue'
 import { useAppStore } from '@/store/modules/app'
 import useClientSize from '@/hooks/useClientSize'
-import Navigation from '@/blocks/Navigation.vue'
-import Header from '@/blocks/Header.vue'
 import OnlyMobile from '@/blocks/OnlyMobile.vue'
 
 export default defineComponent({
-  components: { OnlyMobile, Header, Navigation },
+  components: { OnlyMobile },
   setup() {
     const appStore = useAppStore()
     const { isDesktop } = useClientSize()
