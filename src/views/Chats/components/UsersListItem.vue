@@ -1,7 +1,7 @@
 <template>
   <div class="users-list-item">
     <div class="users-list-item__avatar">
-      <RoundImage :img="image" />
+      <CircleImage :img="image" />
     </div>
     <div class="users-list-item__content ml-3 py-4">
       <div class="d-flex">
@@ -18,12 +18,12 @@
 </template>
 
 <script>
-import RoundImage from '../../../components/ui/RoundImage/RoundImage'
+import CircleImage from '../../../components/ui/CircleImage/CircleImage'
 import Heading from '@/components/ui/Heading/Heading'
 import Text from '@/components/ui/Text/Text'
 export default {
   name: 'UsersListItem',
-  components: { Text, Heading, RoundImage },
+  components: { Text, Heading, CircleImage },
   props: {
     text: {
       type: String,

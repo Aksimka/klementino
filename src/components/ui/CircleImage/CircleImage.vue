@@ -1,5 +1,5 @@
 <template>
-  <div class="round-image">
+  <div class="circle-image">
     <img
       :src="require(`@/assets/images/${img}`)"
       v-bind="$attrs"
@@ -12,7 +12,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'RoundImage',
+  name: 'CircleImage',
   props: {
     img: {
       type: String,
@@ -23,15 +23,14 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.round-image {
+.circle-image {
   position: relative;
   display: inline-block;
   width: 100%;
   height: 100%;
-  border-radius: 50px;
   img {
     display: inline-block;
-    border-radius: 50px;
+    border-radius: 50%;
     object-fit: cover;
     overflow: hidden;
     position: absolute;
