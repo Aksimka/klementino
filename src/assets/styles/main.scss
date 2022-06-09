@@ -82,6 +82,10 @@ body {
   border-radius: 50%;
 }
 
+.margin-x-center {
+  margin: 0 auto;
+}
+
 @for $i from 1 through 10 {
   .ma-#{$i} {
     margin: calc(4px * #{$i});
